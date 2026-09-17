@@ -1,0 +1,1282 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#100c08">
+  <meta name="description" content="Mittal Reserve — a private Italian digital palazzo, established 1926. A one-file cinematic archive." />
+  <meta name="theme-color" content="#100c08" />
+  <script>document.documentElement.className = "js";</script>
+  <title>Mittal Reserve — The Private Palazzo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --umber: #100c08;
+      --umber-2: #17110c;
+      --walnut: #241a11;
+      --walnut-2: #302115;
+      --oxblood: #6b171f;
+      --oxblood-deep: #431116;
+      --olive: #5b5c36;
+      --gold: #b4903d;
+      --gold-bright: #d2b56b;
+      --ivory: #efe6d3;
+      --parchment: #d2c29a;
+      --muted: #988b71;
+      --line: rgba(210, 194, 154, .26);
+      --ease: cubic-bezier(.2, .75, .2, 1);
+      --serif: "Cormorant Garamond", Georgia, serif;
+      --book: "EB Garamond", Georgia, serif;
+      --safe-bottom: max(1.5rem, env(safe-area-inset-bottom));
+    }
+
+    * { box-sizing: border-box; }
+    .no-js .prelude { display: none; }
+    html { scroll-behavior: smooth; background: var(--umber); }
+    body {
+      margin: 0;
+      color: var(--ivory);
+      background:
+        radial-gradient(ellipse at 50% 18%, rgba(100, 65, 32, .15), transparent 42rem),
+        var(--umber);
+      font-family: var(--book);
+      overflow-x: hidden;
+      min-width: 280px;
+    }
+    body.is-light {
+      --umber: #d6c5a6;
+      --umber-2: #e6d8bd;
+      --walnut: #c0a47e;
+      --walnut-2: #ac8d69;
+      --ivory: #241912;
+      --parchment: #493725;
+      --muted: #6b533c;
+      --line: rgba(68, 39, 21, .27);
+      background: #d6c5a6;
+    }
+    body.modal-open { overflow: hidden; }
+    button, a { font: inherit; }
+    button { color: inherit; }
+    a { color: inherit; text-decoration: none; }
+    ::selection { color: var(--umber); background: var(--gold-bright); }
+    :focus-visible { outline: 1px solid var(--gold-bright); outline-offset: 5px; }
+
+    .grain, .dust { position: fixed; inset: 0; pointer-events: none; z-index: 50; }
+    .grain {
+      opacity: .08;
+      mix-blend-mode: screen;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.62'/%3E%3C/svg%3E");
+      animation: grainShift .22s steps(2) infinite;
+    }
+    .dust { z-index: 2; }
+    @keyframes grainShift { 0% { transform: translate(0); } 25% { transform: translate(1%, -1%); } 50% { transform: translate(-1%, 1%); } 75% { transform: translate(1%, 1%); } 100% { transform: translate(-1%, -1%); } }
+
+    .prelude {
+      position: fixed; inset: 0; z-index: 100;
+      display: grid; place-items: center;
+      background: var(--umber);
+      transition: opacity 1.2s var(--ease), visibility 1.2s;
+    }
+    .prelude.is-gone { opacity: 0; visibility: hidden; pointer-events: none; }
+    .prelude-inner { width: min(30rem, 80vw); text-align: center; }
+    .prelude-mark { width: 3.6rem; margin: 0 auto 2rem; color: var(--gold); }
+    .prelude h1 { margin: 0; font: 500 clamp(2.8rem, 8vw, 6rem)/.72 var(--serif); letter-spacing: -.06em; }
+    .prelude h1 span { display: block; margin-left: 2.4rem; font-size: .74em; font-style: italic; font-weight: 300; letter-spacing: -.04em; }
+    .prelude p { margin: 2.25rem 0; color: var(--muted); font: italic 1.05rem var(--book); }
+    .enter-button, .text-link {
+      appearance: none; border: 0; background: transparent; cursor: pointer;
+      text-transform: uppercase; letter-spacing: .25em; font: 600 .59rem var(--book);
+    }
+    .enter-button { padding: 1rem 1.2rem; border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); transition: color .3s, letter-spacing .3s; }
+    .enter-button:hover { color: var(--gold-bright); letter-spacing: .36em; }
+
+    .site-header {
+      position: fixed; z-index: 20; top: 0; left: 0; right: 0;
+      display: flex; align-items: flex-start; justify-content: space-between;
+      padding: 1.8rem clamp(1.25rem, 4vw, 4.5rem);
+      pointer-events: none;
+      mix-blend-mode: normal;
+    }
+    .site-header > * { pointer-events: auto; }
+    .wordmark { font: 600 .76rem var(--book); letter-spacing: .28em; line-height: 1.15; }
+    .wordmark small { display: block; color: var(--muted); margin-top: .45rem; font: .58rem var(--book); letter-spacing: .18em; }
+    .header-actions { display: flex; align-items: center; gap: 1.1rem; }
+    .header-button {
+      border: 0; border-bottom: 1px solid var(--line); padding: 0 0 .35rem;
+      background: transparent; cursor: pointer; color: var(--parchment);
+      font: .59rem var(--book); letter-spacing: .2em; text-transform: uppercase;
+      transition: color .25s, border-color .25s;
+    }
+    .header-button:hover { color: var(--gold-bright); border-color: var(--gold); }
+    .copy-button { color: var(--gold-bright); border-color: rgba(180,144,61,.55); }
+    .copy-button::before { content: "↗ "; color: var(--gold); }
+    .copy-button.is-copied { color: var(--ivory); border-color: var(--gold-bright); }
+
+    main { position: relative; z-index: 3; }
+    .chapter { position: relative; min-height: 100svh; overflow: hidden; }
+    .chapter-inner { position: relative; width: min(90rem, 100%); min-height: 100svh; margin: auto; padding: 9rem clamp(1.25rem, 7vw, 8rem) 7rem; }
+    .eyebrow { color: var(--gold); font: 600 .62rem var(--book); letter-spacing: .32em; text-transform: uppercase; }
+    .chapter-index { position: absolute; top: 10rem; left: clamp(1.25rem, 2.6vw, 3rem); color: var(--muted); writing-mode: vertical-rl; transform: rotate(180deg); font: .6rem var(--book); letter-spacing: .26em; text-transform: uppercase; }
+    .chapter-index::after { content: ""; display: block; width: 1px; height: 4rem; margin: 1rem auto 0; background: var(--gold); opacity: .55; }
+    .display { margin: 0; font: 400 clamp(4.8rem, 12.6vw, 13.5rem)/.72 var(--serif); letter-spacing: -.075em; }
+    .display em { font-weight: 300; }
+    .reveal { opacity: 0; transform: translateY(2rem); filter: blur(8px); transition: opacity 1.2s var(--ease), transform 1.2s var(--ease), filter 1.2s var(--ease); }
+    .reveal.in-view { opacity: 1; transform: none; filter: none; }
+    .delay-1 { transition-delay: .15s; } .delay-2 { transition-delay: .3s; } .delay-3 { transition-delay: .45s; }
+
+    /* Arrival */
+    .arrival { min-height: 100svh; background: radial-gradient(ellipse at 68% 40%, rgba(122, 22, 38, .13), transparent 30rem); }
+    .arrival .chapter-inner { display: grid; align-items: center; padding-top: 10rem; }
+    .arrival-copy { position: relative; z-index: 4; width: min(43rem, 80vw); margin-left: 5vw; }
+    .arrival-copy .display { margin-top: 1.25rem; }
+    .arrival-copy .display span { display: block; margin-left: .42em; font-style: italic; }
+    .arrival-sub { width: 17rem; margin: 2.8rem 0 0 19%; color: var(--parchment); font: italic 1.18rem/1.25 var(--book); }
+    .arrival-note { position: absolute; bottom: 8.3rem; left: clamp(1.25rem, 7vw, 8rem); z-index: 4; display: flex; align-items: center; gap: .8rem; color: var(--muted); font: .63rem var(--book); letter-spacing: .18em; text-transform: uppercase; }
+    .arrival-note::before { content: ""; width: 2.6rem; border-top: 1px solid var(--gold); }
+    .arch-scene { position: absolute; right: 5%; top: 8%; width: min(53vw, 50rem); height: 82%; opacity: .9; transform: translate3d(var(--px, 0), var(--py, 0), 0); transition: transform .15s linear; }
+    .arch-scene::before { content: ""; position: absolute; inset: 11% 12%; border: 1px solid rgba(180,144,61,.33); border-radius: 50% 50% 0 0; box-shadow: inset 0 0 3rem rgba(0,0,0,.4), 0 0 0 1px rgba(239,230,211,.03); }
+    .arch-scene::after { content: ""; position: absolute; inset: 19% 19% 0; background: linear-gradient(180deg, rgba(5,5,3,.12), rgba(5,5,3,.78)), radial-gradient(ellipse at 50% 22%, rgba(212,176,90,.32), transparent 25%); border-radius: 48% 48% 0 0; }
+    .arch-moon { position: absolute; top: 15%; right: 29%; width: 8rem; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 36% 32%, #eadbb3, #8f733d 57%, transparent 58%); filter: blur(.25px); z-index: 1; animation: moonbreath 7s ease-in-out infinite; }
+    .arch-stem { position: absolute; z-index: 3; left: 47%; bottom: 0; width: 2px; height: 72%; background: linear-gradient(transparent, var(--gold)); opacity: .35; }
+    .arch-stem::before, .arch-stem::after { content: ""; position: absolute; left: -7rem; width: 14rem; height: 1px; background: var(--gold); opacity: .5; }
+    .arch-stem::before { top: 15%; transform: rotate(-18deg); } .arch-stem::after { top: 35%; transform: rotate(24deg); }
+    .vines { position: absolute; z-index: 4; inset: 38% 13% 0 12%; opacity: .58; }
+    .vines path { fill: none; stroke: var(--olive); stroke-width: 1.3; }
+    @keyframes moonbreath { 50% { transform: scale(1.04); opacity: .8; } }
+    .scroll-mark { position: absolute; right: clamp(1.25rem, 5vw, 6rem); bottom: 6rem; z-index: 5; writing-mode: vertical-rl; color: var(--muted); font: .58rem var(--book); letter-spacing: .26em; text-transform: uppercase; }
+    .scroll-mark::after { content: ""; display: block; width: 1px; height: 3rem; margin: .8rem auto 0; background: var(--gold); animation: scrollline 2.2s ease-in-out infinite; }
+    @keyframes scrollline { 0%,100% { transform: scaleY(.25); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } }
+
+    /* House / roots */
+    .house { background: linear-gradient(90deg, var(--umber) 0 52%, var(--walnut) 52%); }
+    .house .chapter-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 8vw; align-items: center; }
+    .house-arch { height: min(67vh, 39rem); border: 1px solid var(--line); border-bottom: 0; border-radius: 50% 50% 0 0; position: relative; background: radial-gradient(ellipse at 50% 24%, rgba(180,144,61,.19), transparent 32%), linear-gradient(150deg, rgba(0,0,0,.1), rgba(0,0,0,.52)); overflow: hidden; }
+    .house-arch::before { content: ""; position: absolute; inset: 5%; border: 1px solid rgba(210,194,154,.18); border-bottom: 0; border-radius: 50% 50% 0 0; }
+    .house-arch::after { content: "MCMXXVI"; position: absolute; right: 8%; bottom: 7%; color: var(--gold); font: 1.1rem var(--serif); letter-spacing: .16em; writing-mode: vertical-rl; }
+    .house-arch .silhouette { position: absolute; inset: 25% 20% 0; background: linear-gradient(90deg, transparent, rgba(15,9,5,.7)), url("shaurya.jpg") center/cover, radial-gradient(ellipse at 50% 25%, rgba(211,174,104,.38), transparent 22%), linear-gradient(166deg, #8f7857 0 16%, #443324 17% 27%, #17100c 28% 40%, #7a5a35 41% 53%, #19100c 54% 66%, #57432e 67% 100%); filter: sepia(.5) contrast(1.05); opacity: .65; }
+    .house-arch .silhouette::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, var(--walnut), transparent 45%); }
+    .house-copy { max-width: 29rem; padding-bottom: 2rem; }
+    .house-copy h2, .craft-copy h2, .gallery-copy h2 { margin: 1rem 0 2rem; font: 400 clamp(3rem, 6vw, 6.5rem)/.78 var(--serif); letter-spacing: -.06em; }
+    .body-copy { color: var(--parchment); font: 1.18rem/1.35 var(--book); }
+    .rule { width: 4.5rem; border-top: 1px solid var(--gold); margin: 1.7rem 0; }
+    .timeline { display: grid; grid-template-columns: auto 1fr; gap: 1.1rem 1rem; margin-top: 3rem; color: var(--muted); font-size: .88rem; }
+    .timeline strong { color: var(--gold-bright); font-weight: 400; }
+    .timeline p { margin: 0; }
+
+    /* Craft */
+    .craft { background: var(--walnut); }
+    .craft .chapter-inner { display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 7vw; }
+    .craft-art { min-height: 65vh; position: relative; }
+    .craft-orbit { position: absolute; width: 35rem; height: 35rem; max-width: 82vw; max-height: 82vw; border: 1px solid rgba(180,144,61,.45); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-18deg); }
+    .craft-orbit::before, .craft-orbit::after { content: ""; position: absolute; inset: 9%; border: 1px solid rgba(210,194,154,.19); border-radius: 50%; }
+    .craft-orbit::after { inset: 22%; border-color: rgba(107,23,31,.55); }
+    .bottle { position: absolute; left: 50%; top: 50%; z-index: 2; width: 8rem; height: 28rem; transform: translate(-50%, -48%) rotate(7deg); filter: drop-shadow(1.5rem 1.8rem 1.5rem rgba(0,0,0,.35)); }
+    .bottle-neck { width: 2.5rem; height: 7.5rem; margin: auto; background: linear-gradient(90deg, #120d08, #533b20 48%, #1b100a); border-radius: .4rem .4rem .1rem .1rem; }
+    .bottle-neck::before { content: ""; display: block; height: 1.1rem; background: var(--gold); opacity: .68; }
+    .bottle-body { height: 20rem; border-radius: 3.2rem 3.2rem 1.2rem 1.2rem; background: linear-gradient(90deg, #140c08, #5d1c1d 40%, #2c100f 70%, #100a07); border: 1px solid rgba(210,194,154,.3); position: relative; overflow: hidden; }
+    .bottle-body::after { content: "M\nR"; white-space: pre; position: absolute; left: 1.55rem; top: 5.3rem; width: 4.9rem; height: 8rem; border: 1px solid var(--gold); color: var(--gold-bright); display: grid; place-items: center; text-align: center; font: 2.4rem/.7 var(--serif); letter-spacing: .05em; }
+    .bottle-glint { position: absolute; inset: 0 auto 0 22%; width: 1rem; background: linear-gradient(90deg, transparent, rgba(239,230,211,.12), transparent); transform: skewX(-12deg); }
+    .craft-copy { max-width: 31rem; }
+    .craft-list { padding: 0; margin: 3rem 0 0; list-style: none; border-top: 1px solid var(--line); }
+    .craft-list li { display: flex; justify-content: space-between; gap: 2rem; padding: 1rem 0; border-bottom: 1px solid var(--line); color: var(--parchment); }
+    .craft-list span:first-child { color: var(--gold); font: .67rem var(--book); letter-spacing: .2em; text-transform: uppercase; }
+
+    /* Reserve */
+    .reserve { background: var(--umber-2); }
+    .reserve .chapter-inner { padding-top: 10rem; }
+    .reserve-heading { display: flex; justify-content: space-between; align-items: end; margin-bottom: 4rem; }
+    .reserve-heading h2 { margin: 1rem 0 0; font: 400 clamp(3.3rem, 7vw, 8rem)/.75 var(--serif); letter-spacing: -.07em; }
+    .reserve-intro { max-width: 16rem; color: var(--muted); font: italic 1rem/1.2 var(--book); }
+    .collection { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5vw; align-items: end; }
+    .wine-entry { position: relative; min-height: 31rem; padding: 1.25rem; border-top: 1px solid var(--line); cursor: pointer; transition: transform .5s var(--ease); }
+    .wine-entry:nth-child(2) { min-height: 36rem; } .wine-entry:nth-child(3) { min-height: 33rem; }
+    .wine-entry:hover { transform: translateY(-.8rem); }
+    .wine-image { position: absolute; inset: 4rem 1.25rem 5rem; overflow: hidden; background: var(--walnut); }
+    .wine-image img { width: 100%; height: 100%; object-fit: cover; opacity: .64; filter: sepia(.4) saturate(.7) contrast(1.1); transition: transform 1s var(--ease), opacity .6s; }
+    .wine-entry:hover img { transform: scale(1.05); opacity: .83; }
+    .wine-image::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(16,12,8,.85), transparent 55%), repeating-linear-gradient(110deg, transparent 0 1.5rem, rgba(239,230,211,.035) 1.55rem 1.6rem); }
+    .wine-fallback { position: absolute; inset: 0; background: radial-gradient(ellipse at 54% 28%, rgba(210,178,103,.34), transparent 20%), linear-gradient(145deg, #463223, #160e0a 56%, #42131b); }
+    .wine-fallback.two { background: radial-gradient(ellipse at 40% 34%, rgba(108,119,60,.45), transparent 25%), linear-gradient(145deg, #313526, #120d09 58%, #55391c); }
+    .wine-fallback.three { background: radial-gradient(ellipse at 67% 32%, rgba(172,78,52,.42), transparent 24%), linear-gradient(145deg, #35171b, #120b08 58%, #7b5d2e); }
+    .wine-name { position: absolute; z-index: 2; bottom: 1.35rem; left: 1.25rem; right: 1.25rem; display: flex; justify-content: space-between; align-items: end; }
+    .wine-name h3 { margin: 0; font: 400 2.7rem/.75 var(--serif); letter-spacing: -.05em; }
+    .wine-name small { color: var(--gold-bright); font: .58rem var(--book); letter-spacing: .16em; text-transform: uppercase; }
+    .wine-number { color: var(--gold); font: .72rem var(--book); letter-spacing: .18em; }
+
+    /* Gallery */
+    .gallery { background: linear-gradient(110deg, var(--umber) 0 40%, var(--oxblood-deep) 40%); }
+    .gallery .chapter-inner { display: grid; grid-template-columns: .8fr 1.2fr; align-items: center; gap: 8vw; }
+    .gallery-copy { max-width: 27rem; }
+    .gallery-art { min-height: 63vh; position: relative; }
+    .gallery-frame { position: absolute; inset: 4% 8% 5% 2%; border: 1px solid var(--gold); padding: 1.1rem; transform: rotate(2.5deg); background: var(--walnut); box-shadow: 2rem 2rem 0 rgba(16,12,8,.32); }
+    .gallery-frame::before { content: ""; position: absolute; inset: 1rem; border: 1px solid var(--line); pointer-events: none; }
+    .gallery-picture { width: 100%; height: 100%; background: linear-gradient(145deg, #a58a5e, #3d2d1c 34%, #17110c 35%, #6a1b24); position: relative; overflow: hidden; }
+    .gallery-picture::before { content: ""; position: absolute; width: 72%; aspect-ratio: 1; left: 15%; top: 12%; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #dfd3aa 0 2%, #856b43 3% 8%, transparent 9%), radial-gradient(ellipse, #1a100c 0 41%, transparent 42%); box-shadow: 0 0 0 2rem rgba(10,7,4,.17), 0 0 0 4rem rgba(10,7,4,.08); }
+    .gallery-picture::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(239,230,211,.18), transparent 14% 72%, rgba(0,0,0,.35)); mix-blend-mode: screen; }
+    .gallery-stamp { position: absolute; right: -2rem; bottom: 6%; writing-mode: vertical-rl; color: var(--gold-bright); font: .62rem var(--book); letter-spacing: .24em; }
+
+    /* Correspondence */
+    .correspondence { min-height: 82svh; background: var(--walnut); }
+    .correspondence .chapter-inner { display: grid; place-items: center; text-align: center; padding-bottom: 10rem; }
+    .correspondence h2 { margin: 1.4rem 0; font: 400 clamp(4rem, 11vw, 12rem)/.7 var(--serif); letter-spacing: -.08em; }
+    .correspondence h2 em { display: block; margin-left: .45em; }
+    .correspondence p { max-width: 24rem; margin: 2rem auto; color: var(--parchment); font: italic 1.15rem/1.25 var(--book); }
+    .seal-link { display: inline-flex; align-items: center; gap: 1rem; padding: 1rem 0; border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); color: var(--gold-bright); font: .63rem var(--book); letter-spacing: .24em; text-transform: uppercase; transition: letter-spacing .3s; }
+    .seal-link:hover { letter-spacing: .34em; }
+    .correspondence-note { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); width: max-content; color: var(--muted); font: .63rem var(--book); letter-spacing: .18em; text-transform: uppercase; }
+
+    /* The register */
+    .register { background: #1b140e; }
+    .register .chapter-inner { padding-top: 10rem; }
+    .register-heading { display: flex; justify-content: space-between; align-items: end; gap: 3rem; margin-bottom: 3.5rem; }
+    .register-heading h2 { margin: 1rem 0 0; font: 400 clamp(3.2rem, 7vw, 7.5rem)/.74 var(--serif); letter-spacing: -.07em; }
+    .register-heading p { max-width: 15rem; color: var(--muted); font: italic 1rem/1.2 var(--book); }
+    .register-list { border-top: 1px solid var(--line); }
+    .register-entry { display: grid; grid-template-columns: 6rem 9rem 1fr auto; gap: 1.5rem; align-items: center; padding: 1.4rem 0; border-bottom: 1px solid var(--line); }
+    .register-entry b { color: var(--gold); font: .7rem var(--book); letter-spacing: .16em; }
+    .register-entry time { color: var(--gold-bright); font: 1.15rem var(--serif); }
+    .register-entry p { margin: 0; color: var(--parchment); font: 1.1rem var(--book); }
+    .register-entry em { color: var(--muted); font: .78rem var(--book); }
+
+    /* The secret garden */
+    .garden { background: radial-gradient(ellipse at 52% 34%, rgba(102,104,61,.2), transparent 28rem), #10130d; }
+    .garden .chapter-inner { display: grid; grid-template-columns: .72fr 1.28fr; align-items: center; gap: 5vw; }
+    .garden-copy { max-width: 27rem; position: relative; z-index: 3; }
+    .garden-copy h2, .salon-copy h2, .archive-copy h2, .valuation-copy h2 { margin: 1rem 0 2rem; font: 400 clamp(3.2rem, 7vw, 7rem)/.76 var(--serif); letter-spacing: -.07em; }
+    .garden-scene { min-height: 66vh; position: relative; overflow: hidden; }
+    .garden-moon { position: absolute; top: 12%; right: 17%; width: 7rem; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #f0dfad, #a7824c 55%, transparent 57%); box-shadow: 0 0 5rem rgba(213,184,111,.13); }
+    .garden-ground { position: absolute; left: -10%; right: -10%; bottom: 0; height: 43%; background: radial-gradient(ellipse at 50% 0, rgba(127,125,65,.32), transparent 46%), linear-gradient(5deg, #11120d, #27301e 50%, transparent 51%); transform: perspective(28rem) rotateX(54deg); transform-origin: bottom; }
+    .cypress { position: absolute; bottom: 24%; width: 3.1rem; height: 16rem; background: linear-gradient(90deg, #0a0c09, #323a20 48%, #0b0d09); clip-path: polygon(50% 0, 76% 28%, 67% 100%, 33% 100%, 24% 28%); filter: drop-shadow(1rem .8rem 1rem rgba(0,0,0,.3)); }
+    .cypress.one { left: 8%; height: 19rem; } .cypress.two { left: 26%; height: 12rem; } .cypress.three { right: 10%; height: 22rem; }
+    .garden-arch { position: absolute; left: 36%; bottom: 17%; width: 23rem; max-width: 55%; height: 17rem; border: 1.2rem solid #403c27; border-bottom: 0; border-radius: 50% 50% 0 0; box-shadow: inset 0 0 3rem #080a07, 0 1rem 2rem rgba(0,0,0,.45); }
+    .garden-fountain { position: absolute; left: 46%; bottom: 16%; width: 5rem; height: 4rem; border: 1px solid var(--gold); border-radius: 50% 50% 0 0; opacity: .5; }
+    .garden-fountain::after { content: ""; position: absolute; width: 2px; height: 4rem; left: 50%; bottom: 0; background: linear-gradient(var(--gold), transparent); }
+
+    /* The night salon */
+    .salon { background: #170f0c; }
+    .salon .chapter-inner { display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: 7vw; }
+    .salon-copy { order: 2; }
+    .salon-room { position: relative; min-height: 65vh; perspective: 50rem; overflow: hidden; background: linear-gradient(90deg, #0d0b09, #332217 46%, #120e0b); border: 1px solid var(--line); }
+    .salon-room::before { content: ""; position: absolute; inset: 13% 14% 0; border: 1px solid rgba(210,194,154,.21); border-bottom: 0; transform: perspective(20rem) rotateX(-8deg); }
+    .salon-floor { position: absolute; inset: 58% -8% -8%; background: repeating-linear-gradient(90deg, rgba(239,230,211,.08) 0 1px, transparent 1px 4rem), linear-gradient(160deg, #403024, #120d0a 70%); transform: perspective(22rem) rotateX(52deg); transform-origin: top; }
+    .salon-light { position: absolute; top: 16%; left: 46%; width: 1.2rem; height: 1.2rem; border-radius: 50%; background: #e8c87d; box-shadow: 0 0 2rem 1rem rgba(222,177,86,.27), 0 0 8rem 4rem rgba(171,114,48,.12); }
+    .salon-light::after { content: ""; position: absolute; top: 1rem; left: -9rem; width: 18rem; height: 24rem; background: linear-gradient(180deg, rgba(230,186,94,.15), transparent 70%); clip-path: polygon(44% 0, 56% 0, 100% 100%, 0 100%); }
+    .salon-curtain { position: absolute; top: 0; bottom: 28%; width: 19%; background: linear-gradient(90deg, #16090b, #591d25 46%, #200b10); opacity: .85; }
+    .salon-curtain.left { left: 0; clip-path: polygon(0 0, 100% 0, 77% 100%, 0 100%); } .salon-curtain.right { right: 0; clip-path: polygon(0 0, 100% 0, 100% 100%, 23% 100%); }
+
+    /* The private archive */
+    .archive { background: #21170f; }
+    .archive .chapter-inner { display: grid; grid-template-columns: .7fr 1.3fr; gap: 8vw; align-items: center; }
+    .archive-copy { max-width: 25rem; }
+    .archive-table { position: relative; min-height: 55vh; border: 1px solid var(--line); padding: 2rem; background: repeating-linear-gradient(0deg, transparent 0 2.5rem, rgba(210,194,154,.08) 2.55rem 2.6rem), #b99f72; transform: rotate(-2deg); box-shadow: 1.5rem 1.5rem 0 rgba(0,0,0,.17); color: #3a2718; }
+    .archive-table::before { content: "L'ARCHIVIO PRIVATO"; position: absolute; top: 1rem; right: 1rem; color: #705532; font: .58rem var(--book); letter-spacing: .18em; }
+    .archive-table::after { content: ""; position: absolute; inset: 1rem; border: 1px solid rgba(74,46,25,.35); pointer-events: none; }
+    .archive-letter { position: relative; z-index: 1; width: 72%; margin: 4rem auto 0; padding: 2rem; min-height: 16rem; background: #dfcd9f; box-shadow: .8rem .8rem 1rem rgba(39,22,12,.25); transform: rotate(3deg); }
+    .archive-letter b { display: block; font: 1.3rem var(--serif); letter-spacing: .13em; }
+    .archive-letter p { font: italic 1.2rem/1.25 var(--book); }
+    .archive-seal { position: absolute; right: 13%; bottom: 12%; display: grid; place-items: center; width: 4.6rem; height: 4.6rem; border: 5px double #661c20; border-radius: 50%; color: #661c20; font: .7rem var(--serif); transform: rotate(-12deg); }
+
+    /* Conceptual valuation */
+    .valuation { background: #0d0a08; }
+    .valuation .chapter-inner { display: grid; place-items: center; text-align: center; min-height: 100svh; }
+    .valuation-copy h2 { font-size: clamp(3.2rem, 8vw, 8rem); }
+    .valuation-amount { margin: 2rem 0; color: var(--gold-bright); font: 400 clamp(4rem, 13vw, 14rem)/.7 var(--serif); letter-spacing: -.08em; }
+    .valuation-note { color: var(--muted); font: .63rem var(--book); letter-spacing: .23em; text-transform: uppercase; }
+
+    /* Private sound chamber */
+    .suono { background: radial-gradient(ellipse at 50% 45%, rgba(107,23,31,.2), transparent 32rem), #120e0c; }
+    .suono .chapter-inner { display: grid; place-items: center; text-align: center; }
+    .suono-disc { width: min(24rem, 68vw); aspect-ratio: 1; border: 1px solid var(--gold); border-radius: 50%; display: grid; place-items: center; box-shadow: 0 0 0 1rem rgba(180,144,61,.04), 0 0 0 3rem rgba(180,144,61,.025); }
+    .suono-disc::before { content: "IL SUONO PRIVATO"; display: grid; place-items: center; width: 9rem; aspect-ratio: 1; border: 1px solid var(--line); border-radius: 50%; color: var(--gold); font: .58rem var(--book); letter-spacing: .2em; }
+    .suono h2 { margin: 2rem 0 1rem; font: 400 clamp(3rem, 7vw, 7rem)/.7 var(--serif); letter-spacing: -.07em; }
+
+    /* The final chapel */
+    .chapel { min-height: 118svh; background: radial-gradient(ellipse at 50% 56%, rgba(182,132,61,.13), transparent 17rem), linear-gradient(90deg, #080706, #17110d 50%, #080706); }
+    .chapel .chapter-inner { display: grid; place-items: center; padding-top: 12rem; padding-bottom: 12rem; }
+    .chapel-passage { position: absolute; inset: 0; background: linear-gradient(90deg, #090705, transparent 34% 66%, #090705), repeating-linear-gradient(90deg, transparent 0 18%, rgba(210,194,154,.08) 18.1% 18.2%, transparent 18.3% 81.7%, rgba(210,194,154,.08) 81.8% 81.9%, transparent 82%); opacity: .7; }
+    .chapel-frame { position: relative; z-index: 2; width: min(40rem, 80vw); height: min(68vh, 42rem); border: 1px solid rgba(180,144,61,.35); display: grid; place-items: center; background: radial-gradient(ellipse at 50% 43%, rgba(212,164,70,.2), transparent 16rem); }
+    .chapel-frame::before { content: ""; position: absolute; inset: 7%; border: 1px solid rgba(210,194,154,.17); border-bottom: 0; border-radius: 50% 50% 0 0; }
+    .cross { position: relative; z-index: 2; width: clamp(8rem, 17vw, 11rem); height: min(28rem, 59vh); transform-style: preserve-3d; filter: drop-shadow(1.15rem 1.45rem 1.15rem rgba(0,0,0,.68)); }
+    .cross::before, .cross::after { content: ""; position: absolute; overflow: hidden; background: linear-gradient(90deg, #100a07 0%, #2f1c10 10%, #694528 25%, #352012 47%, #88633a 51%, #4b2e18 70%, #1a0e09 100%); border: 1px solid rgba(179,137,75,.8); box-shadow: inset .32rem 0 .5rem rgba(0,0,0,.5), inset -.34rem 0 .45rem rgba(239,210,146,.1), inset 0 -.45rem .6rem rgba(0,0,0,.48), .32rem .38rem 0 rgba(25,13,8,.62); transform: translateZ(1.1rem); }
+    .cross::before { left: 34%; top: 0; width: 32%; height: 100%; border-radius: .12rem .12rem .04rem .04rem; }
+    .cross::after { left: 0; top: 26%; width: 100%; height: 23%; border-radius: .08rem; }
+    .cross-grain { position: absolute; z-index: 3; inset: 2% 35% 1%; background: repeating-linear-gradient(82deg, transparent 0 1.2rem, rgba(239,230,211,.12) 1.24rem 1.29rem, transparent 1.34rem 2.8rem), repeating-linear-gradient(170deg, transparent 0 3.8rem, rgba(16,9,5,.25) 3.84rem 3.92rem, transparent 3.98rem 6.4rem); mix-blend-mode: screen; opacity: .68; pointer-events: none; }
+    .cross-grain::before { content: ""; position: absolute; left: -108%; top: 26%; width: 316%; height: 23%; background: repeating-linear-gradient(9deg, transparent 0 1.35rem, rgba(239,230,211,.1) 1.4rem 1.46rem, transparent 1.51rem 3.2rem); mix-blend-mode: screen; }
+    .cross-wear { position: absolute; z-index: 4; inset: 1% 33% 1%; pointer-events: none; background: linear-gradient(96deg, transparent 0 23%, rgba(239,230,211,.16) 23.4% 24%, transparent 24.5% 61%, rgba(14,7,4,.36) 61.5% 63%, transparent 63.5%), radial-gradient(ellipse at 58% 23%, rgba(239,230,211,.14), transparent 8%), radial-gradient(ellipse at 42% 74%, rgba(0,0,0,.32), transparent 15%); opacity: .7; mix-blend-mode: screen; }
+    .cross-wear::before { content: ""; position: absolute; left: -95%; top: 26%; width: 290%; height: 23%; background: linear-gradient(8deg, transparent 0 37%, rgba(239,230,211,.12) 37.5% 38.3%, transparent 39% 76%, rgba(0,0,0,.34) 76.5% 78%, transparent 78.5%); }
+    .cross::after { clip-path: polygon(0 3%, 3% 0, 97% 0, 100% 3%, 100% 97%, 97% 100%, 3% 100%, 0 97%); }
+    .chapel-inscription { position: relative; z-index: 3; margin-top: 3rem; text-align: center; color: var(--parchment); }
+    .chapel-inscription { position: relative; z-index: 3; margin-top: 3rem; text-align: center; color: var(--parchment); }
+    .chapel-inscription p { margin: 0; font: italic 1.2rem/1.25 var(--book); }
+    .chapel-inscription span { display: block; margin-top: 1.4rem; color: var(--gold); font: .6rem var(--book); letter-spacing: .24em; text-transform: uppercase; }
+
+    .footer-nav { position: fixed; z-index: 15; left: 50%; bottom: var(--safe-bottom); transform: translateX(-50%); display: flex; align-items: center; gap: .8rem; padding: .55rem .75rem; border: 1px solid rgba(210,194,154,.26); background: rgba(16,12,8,.78); backdrop-filter: blur(12px); color: var(--parchment); }
+    .footer-nav button { border: 0; background: none; padding: .25rem .35rem; cursor: pointer; font: .59rem var(--book); letter-spacing: .16em; text-transform: uppercase; }
+    .footer-nav button:hover { color: var(--gold-bright); }
+    .footer-nav .chapter-current { min-width: 4.8rem; color: var(--gold); text-align: center; font: .68rem var(--book); }
+    .footer-nav .nav-line { width: 2.3rem; height: 1px; background: var(--line); }
+
+    .sound-orb { position: fixed; z-index: 24; right: clamp(1.1rem, 3vw, 3.5rem); bottom: calc(var(--safe-bottom) + 4.2rem); width: 3.65rem; height: 3.65rem; border: 1px solid rgba(180,144,61,.68); border-radius: 50%; background: rgba(16,12,8,.78); cursor: pointer; transition: width .5s var(--ease), border-radius .5s var(--ease), background .3s; overflow: hidden; }
+    .sound-orb:hover, .sound-orb:focus-within, .sound-orb.is-open { width: 13.5rem; border-radius: 2rem; }
+    .orb-mark { position: absolute; left: 0; top: 0; width: 3.65rem; height: 3.65rem; display: grid; place-items: center; }
+    .orb-mark::before { content: ""; width: 1.1rem; height: 1.1rem; border: 1px solid var(--gold); border-radius: 50%; box-shadow: 0 0 0 .34rem rgba(180,144,61,.08), 0 0 0 .62rem rgba(180,144,61,.05); transition: transform 1s; }
+    .sound-orb.is-playing .orb-mark::before { animation: orbPulse 2.5s ease-in-out infinite; }
+    @keyframes orbPulse { 50% { transform: scale(1.12); box-shadow: 0 0 0 .34rem rgba(180,144,61,.13), 0 0 0 .7rem rgba(180,144,61,.07); } }
+    .orb-panel { position: absolute; left: 3.65rem; top: 0; height: 3.65rem; width: 9.6rem; display: flex; flex-direction: column; justify-content: center; padding-left: .65rem; opacity: 0; transition: opacity .3s .1s; }
+    .sound-orb:hover .orb-panel, .sound-orb:focus-within .orb-panel, .sound-orb.is-open .orb-panel { opacity: 1; }
+    .orb-title { color: var(--gold-bright); font: .57rem var(--book); letter-spacing: .16em; text-transform: uppercase; }
+    .orb-state { margin-top: .25rem; color: var(--parchment); font: .72rem var(--book); white-space: nowrap; }
+    .orb-controls { position: absolute; right: .55rem; top: 1.2rem; display: flex; gap: .35rem; }
+    .orb-controls button { width: 1.35rem; height: 1.35rem; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: transparent; cursor: pointer; font: .65rem var(--book); }
+    .orb-controls button:hover { color: var(--gold-bright); border-color: var(--gold); }
+    .wave { position: absolute; left: .65rem; bottom: .42rem; display: flex; gap: 2px; height: .45rem; align-items: center; opacity: .65; }
+    .wave i { width: 1px; height: .25rem; background: var(--gold); }
+    .is-playing .wave i:nth-child(1), .is-playing .wave i:nth-child(5) { animation: wave .8s infinite alternate; }
+    .is-playing .wave i:nth-child(2), .is-playing .wave i:nth-child(4) { animation: wave .55s .1s infinite alternate; }
+    .is-playing .wave i:nth-child(3) { animation: wave .7s .2s infinite alternate; }
+    @keyframes wave { to { height: .56rem; } }
+    .youtube-ghost { position: fixed; width: 1px; height: 1px; opacity: .01; pointer-events: none; left: -10px; top: -10px; border: 0; }
+
+    .chapter-drawer { position: fixed; z-index: 80; inset: 0; display: flex; justify-content: flex-end; background: rgba(0,0,0,.5); opacity: 0; visibility: hidden; transition: opacity .4s, visibility .4s; }
+    .chapter-drawer.open { opacity: 1; visibility: visible; }
+    .drawer-panel { width: min(30rem, 92vw); padding: 7rem 3rem 3rem; border-left: 1px solid var(--line); background: var(--umber-2); transform: translateX(2rem); transition: transform .5s var(--ease); }
+    .open .drawer-panel { transform: none; }
+    .drawer-close { float: right; margin-top: -3rem; border: 0; background: none; cursor: pointer; color: var(--gold); font: .68rem var(--book); }
+    .drawer-panel h2 { margin: 0 0 2rem; font: 400 3.5rem/.75 var(--serif); }
+    .drawer-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+    .drawer-list button { display: flex; justify-content: space-between; width: 100%; padding: 1.1rem 0; border: 0; border-bottom: 1px solid var(--line); background: none; cursor: pointer; color: var(--parchment); text-align: left; }
+    .drawer-list button:hover { color: var(--gold-bright); }
+    .drawer-list small { color: var(--gold); font: .6rem var(--book); letter-spacing: .18em; }
+    .drawer-list span { font: 1.4rem var(--serif); }
+
+    .modal { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 1.2rem; background: rgba(0,0,0,.72); opacity: 0; visibility: hidden; transition: opacity .35s, visibility .35s; }
+    .modal.open { opacity: 1; visibility: visible; }
+    .modal-card { position: relative; width: min(39rem, 94vw); min-height: 24rem; padding: 3.5rem; border: 1px solid var(--gold); background: var(--walnut); box-shadow: 1.5rem 1.5rem 0 rgba(0,0,0,.2); transform: translateY(1rem); transition: transform .5s var(--ease); }
+    .open .modal-card { transform: none; }
+    .modal-close { position: absolute; top: 1.2rem; right: 1.4rem; border: 0; background: none; cursor: pointer; color: var(--gold); font: .65rem var(--book); letter-spacing: .18em; text-transform: uppercase; }
+    .modal-card h2 { margin: 1rem 0 1.2rem; font: 400 clamp(3rem, 7vw, 5rem)/.75 var(--serif); letter-spacing: -.06em; }
+    .modal-card p { max-width: 28rem; color: var(--parchment); font: 1.1rem/1.3 var(--book); }
+    .modal-folio { color: var(--gold); font: .62rem var(--book); letter-spacing: .22em; text-transform: uppercase; }
+    .source-trigger { width: 100%; margin-top: 2rem; padding: 1rem 0 0; border: 0; border-top: 1px solid var(--line); background: none; cursor: pointer; color: var(--muted); text-align: left; font: .61rem var(--book); letter-spacing: .13em; text-transform: uppercase; }
+    .source-trigger:hover { color: var(--gold-bright); }
+    .source-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin: 1.7rem 0; }
+    .source-actions button { padding: .7rem .85rem; border: 1px solid var(--line); background: transparent; cursor: pointer; color: var(--parchment); font: .6rem var(--book); letter-spacing: .12em; text-transform: uppercase; }
+    .source-actions button:hover { border-color: var(--gold); color: var(--gold-bright); }
+    .source-view { display: none; width: 100%; height: 16rem; padding: 1rem; border: 1px solid var(--line); resize: vertical; background: rgba(0,0,0,.3); color: var(--parchment); font: .68rem/1.4 monospace; }
+    .source-view.visible { display: block; }
+    .source-status { min-height: 1rem; color: var(--gold-bright); font: .72rem var(--book); }
+    .source-card { max-height: min(88vh, 52rem); overflow: auto; }
+    .source-card::before, .source-card::after { content: ""; position: absolute; width: 1rem; height: 1rem; border-color: var(--gold); pointer-events: none; }
+    .source-card::before { top: .7rem; left: .7rem; border-top: 1px solid; border-left: 1px solid; }
+    .source-card::after { right: .7rem; bottom: .7rem; border-right: 1px solid; border-bottom: 1px solid; }
+
+
+    /* Added conservation layer: additive, non-destructive, single-file features */
+    .prelude { background: radial-gradient(ellipse at 50% 46%, rgba(107,23,31,.16), transparent 22rem), #080706; }
+    .prelude::before { content: ""; position: absolute; inset: 1.25rem; border: 1px solid rgba(180,144,61,.28); pointer-events: none; }
+    .prelude-inner { position: relative; z-index: 1; }
+    .prelude-mark { animation: crestDraw 2.8s var(--ease) both; }
+    @keyframes crestDraw { from { opacity: 0; transform: scale(.74) rotate(-18deg); } 35% { opacity: 1; } to { opacity: 1; transform: none; } }
+    .prelude-ritual { width: min(25rem, 82vw); margin: 1.8rem auto 1.5rem; }
+    .prelude-status { display: flex; justify-content: space-between; color: var(--muted); font: .55rem var(--book); letter-spacing: .18em; text-transform: uppercase; }
+    .prelude-progress { height: 1px; margin-top: .65rem; background: rgba(210,194,154,.18); overflow: hidden; }
+    .prelude-progress span { display: block; width: 0; height: 100%; background: linear-gradient(90deg, var(--oxblood), var(--gold-bright)); transition: width .25s linear; }
+    .prelude-choice-label { display: block; margin: 1.6rem 0 .65rem; color: var(--muted); font: .55rem var(--book); letter-spacing: .18em; text-transform: uppercase; }
+    .theme-choices { display: flex; justify-content: center; gap: .55rem; }
+    .theme-choice { min-width: 8.5rem; padding: .65rem .55rem; border: 1px solid var(--line); background: transparent; color: var(--parchment); cursor: pointer; font: .58rem var(--book); letter-spacing: .1em; text-transform: uppercase; transition: background .3s, color .3s, border-color .3s; }
+    .theme-choice:hover, .theme-choice.is-selected { color: var(--umber); background: var(--gold-bright); border-color: var(--gold-bright); }
+    .enter-button:disabled { cursor: wait; opacity: .35; letter-spacing: .18em; }
+    .loading-done .enter-button { animation: enterReady 1.2s ease both; }
+    @keyframes enterReady { from { opacity: .35; } to { opacity: 1; } }
+    .cursor-ring { position: fixed; z-index: 120; width: 1.25rem; height: 1.25rem; border: 1px solid rgba(210,181,107,.72); border-radius: 50%; pointer-events: none; opacity: 0; transform: translate(-50%, -50%); transition: width .25s var(--ease), height .25s var(--ease), background .25s, opacity .25s; mix-blend-mode: screen; }
+    .cursor-ring.is-visible { opacity: .86; }
+    .cursor-ring.is-hovering { width: 2.35rem; height: 2.35rem; background: rgba(180,144,61,.1); }
+    @media (pointer: coarse) { .cursor-ring { display: none; } }
+    .scroll-rail { position: fixed; z-index: 14; top: 25vh; right: .9rem; height: 50vh; width: 1px; background: rgba(210,194,154,.16); pointer-events: none; }
+    .scroll-rail span { display: block; width: 3px; margin-left: -1px; height: 0; background: var(--gold); box-shadow: 0 0 .7rem rgba(210,181,107,.4); transition: height .15s linear; }
+    .private-modal { background: rgba(3,2,2,.86); }
+    .private-card { width: min(62rem, 96vw); max-height: min(90vh, 58rem); overflow: auto; padding: clamp(2rem, 5vw, 4rem); background: linear-gradient(145deg, rgba(55,36,22,.96), rgba(18,12,9,.98)); }
+    .private-card::before { content: "PRIVATE FOLIO · MR / PERSONAL ARCHIVE"; position: absolute; top: 1rem; left: 1.25rem; color: var(--gold); font: .53rem var(--book); letter-spacing: .18em; }
+    .private-intro { max-width: 31rem; color: var(--parchment); font: italic 1.12rem/1.25 var(--book); }
+    .private-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin: 2rem 0; }
+    .private-plate { position: relative; margin: 0; padding: .65rem; border: 1px solid var(--line); background: rgba(0,0,0,.18); }
+    .private-image { position: relative; min-height: 19rem; overflow: hidden; background: #1b130e; transition: filter 1.2s var(--ease), transform 1.2s var(--ease); }
+    .private-card:not(.is-revealed) .private-image { filter: brightness(.12) blur(10px); transform: scale(.985); }
+    .private-card:not(.is-revealed) .private-image::after { content: "SEALED"; position: absolute; inset: 0; display: grid; place-items: center; color: var(--gold-bright); font: .65rem var(--book); letter-spacing: .35em; }
+    .private-image img { position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; object-fit: cover; filter: sepia(.55) contrast(1.12); }
+    .portrait-fallback { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 28%, rgba(202,166,96,.34), transparent 21%), linear-gradient(128deg, #57412d 0 23%, #17100d 24% 48%, #51232a 49% 62%, #130d0a 63%); }
+    .portrait-fallback::before { content: ""; position: absolute; left: 32%; top: 17%; width: 18%; height: 28%; border-radius: 50% 50% 42% 42%; background: #8c6a4a; box-shadow: 3.6rem .8rem 0 -1.1rem #694b38, 0 8rem 0 4rem #241710; opacity: .72; }
+    .soulmate-fallback { background: radial-gradient(ellipse at 65% 24%, rgba(205,176,112,.35), transparent 18%), linear-gradient(145deg, #8c7353 0 19%, #2a1d16 20% 42%, #5e1d27 43% 64%, #100b09 65%); }
+    .soulmate-fallback::before { left: 51%; box-shadow: -3.7rem 1.2rem 0 -1rem #6f523e, 0 8rem 0 4rem #301914; }
+    .private-plate figcaption { display: flex; justify-content: space-between; gap: 1rem; padding: .8rem .1rem .15rem; color: var(--parchment); font: .76rem var(--book); }
+    .private-plate figcaption small { color: var(--gold); font-size: .56rem; letter-spacing: .14em; text-transform: uppercase; }
+    .private-actions { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+    .seal-action { padding: .8rem 1rem; border: 1px solid var(--gold); background: transparent; color: var(--gold-bright); cursor: pointer; font: .6rem var(--book); letter-spacing: .16em; text-transform: uppercase; }
+    .seal-action:hover { background: var(--gold); color: var(--umber); }
+    .private-note { color: var(--muted); font: .7rem/1.3 var(--book); }
+    .instrument-card { width: min(65rem, 96vw); max-height: min(90vh, 58rem); overflow: auto; padding: clamp(2rem, 5vw, 4rem); }
+    .instrument-intro { max-width: 34rem; color: var(--parchment); font: 1.05rem/1.3 var(--book); }
+    .instrument-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 1rem; margin-top: 2rem; }
+    .instrument-panel { position: relative; min-height: 13rem; padding: 1.2rem; border: 1px solid var(--line); background: rgba(0,0,0,.16); }
+    .instrument-panel h3 { margin: 0 0 .8rem; color: var(--gold-bright); font: 1.8rem/.8 var(--serif); }
+    .instrument-panel p { color: var(--parchment); font: .86rem/1.3 var(--book); }
+    .terroir-map { width: 100%; height: 11rem; border: 1px solid rgba(180,144,61,.3); background: radial-gradient(ellipse at 55% 44%, rgba(180,144,61,.18), transparent 35%), #16110d; }
+    .terroir-map path { fill: none; stroke: var(--gold); stroke-width: 1.2; opacity: .75; }
+    .map-pin { fill: var(--gold-bright); stroke: var(--umber); stroke-width: 2; cursor: pointer; }
+    .instrument-readout { min-height: 1.6rem; margin-top: .6rem; color: var(--gold-bright); font: .72rem var(--book); }
+    .instrument-range { width: 100%; accent-color: var(--gold); }
+    .range-value { color: var(--gold-bright); font: 1.6rem var(--serif); }
+    .radar { width: 10rem; aspect-ratio: 1; margin: .5rem auto 1rem; border: 1px solid rgba(180,144,61,.65); border-radius: 50%; background: repeating-radial-gradient(circle, transparent 0 1.7rem, rgba(210,194,154,.17) 1.75rem 1.8rem), conic-gradient(from 225deg, rgba(107,23,31,.6), rgba(180,144,61,.2), rgba(91,92,54,.45), rgba(107,23,31,.6)); clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+    .radar-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: .4rem; }
+    .radar-buttons button, .pairing-buttons button { border: 1px solid var(--line); background: transparent; color: var(--parchment); cursor: pointer; padding: .45rem .55rem; font: .58rem var(--book); letter-spacing: .1em; text-transform: uppercase; }
+    .radar-buttons button:hover, .pairing-buttons button:hover { border-color: var(--gold); color: var(--gold-bright); }
+    .serial-row { display: flex; gap: .5rem; }
+    .serial-row input { min-width: 0; flex: 1; padding: .7rem; border: 1px solid var(--line); background: rgba(0,0,0,.22); color: var(--ivory); font: .75rem monospace; }
+    .serial-row button { border: 1px solid var(--gold); background: transparent; color: var(--gold-bright); cursor: pointer; padding: .7rem; font: .58rem var(--book); letter-spacing: .1em; text-transform: uppercase; }
+    .pairing-buttons { display: flex; flex-wrap: wrap; gap: .45rem; }
+
+    /* Final museum-grade visual pass: material, framing, and archival restraint. */
+    html { background-color: var(--umber); }
+    body {
+      background:
+        radial-gradient(ellipse at 50% 12%, rgba(189,145,71,.09), transparent 27rem),
+        radial-gradient(ellipse at 50% 100%, rgba(107,23,31,.1), transparent 35rem),
+        repeating-linear-gradient(0deg, rgba(239,230,211,.012) 0 1px, transparent 1px 5px),
+        var(--umber);
+    }
+    body::before {
+      content: ""; position: fixed; inset: .9rem; z-index: 49; pointer-events: none;
+      border: 1px solid rgba(180,144,61,.2);
+      box-shadow: inset 0 0 0 1px rgba(239,230,211,.025), 0 0 0 1px rgba(0,0,0,.28);
+    }
+    .chapter { isolation: isolate; }
+    .chapter::before {
+      content: ""; position: absolute; inset: 1.55rem; z-index: -1; pointer-events: none;
+      border: 1px solid rgba(210,194,154,.055);
+      background: linear-gradient(90deg, transparent 0 8%, rgba(180,144,61,.035) 8.05% 8.1%, transparent 8.15% 91.85%, rgba(180,144,61,.035) 91.9% 91.95%, transparent 92%);
+    }
+    .chapter-inner { z-index: 1; }
+    .eyebrow { display: inline-flex; align-items: center; gap: .7rem; text-shadow: 0 1px 0 rgba(0,0,0,.4); }
+    .eyebrow::before { content: ""; width: 1.8rem; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); opacity: .7; }
+    .chapter-index { text-shadow: 0 1px 0 #000; }
+    .chapter-index::before { content: "✦"; display: block; margin: 0 auto .85rem; color: var(--gold); writing-mode: horizontal-tb; font-size: .55rem; letter-spacing: 0; opacity: .75; }
+    .display, .house-copy h2, .craft-copy h2, .gallery-copy h2, .reserve-heading h2, .register-heading h2, .garden-copy h2, .salon-copy h2, .archive-copy h2, .valuation-copy h2, .suono h2, .correspondence h2, .modal-card h2 {
+      text-shadow: .04em .06em 0 rgba(0,0,0,.22), 0 0 2rem rgba(180,144,61,.035);
+    }
+    .site-header { padding-top: 2rem; }
+    .site-header::after { content: ""; position: absolute; left: clamp(1.25rem, 4vw, 4.5rem); right: clamp(1.25rem, 4vw, 4.5rem); top: 5.25rem; border-top: 1px solid rgba(210,194,154,.12); }
+    .wordmark { position: relative; }
+    .wordmark::before { content: "✦"; position: absolute; left: -.9rem; top: -.12rem; color: var(--gold); font-size: .52rem; }
+    .header-button, .footer-nav button { text-shadow: 0 1px 0 rgba(0,0,0,.35); }
+    .arrival { background: radial-gradient(ellipse at 68% 40%, rgba(122,22,38,.18), transparent 30rem), radial-gradient(ellipse at 30% 70%, rgba(180,144,61,.05), transparent 24rem); }
+    .arch-scene::before { box-shadow: inset 0 0 3rem rgba(0,0,0,.55), inset 0 0 0 1px rgba(210,194,154,.08), 0 0 0 1px rgba(239,230,211,.04), 1.4rem 1.4rem 0 rgba(0,0,0,.12); }
+    .arrival-copy .display span { text-shadow: .07em .06em 0 rgba(107,23,31,.25); }
+    .house-arch, .gallery-frame, .archive-table, .salon-room, .instrument-panel, .private-plate {
+      box-shadow: inset 0 0 0 1px rgba(239,230,211,.035), 1.2rem 1.2rem 0 rgba(0,0,0,.13);
+    }
+    .house-arch::before, .gallery-frame::before { box-shadow: inset 0 0 2.5rem rgba(0,0,0,.22); }
+    .house-arch .silhouette { filter: sepia(.55) contrast(1.08) saturate(.82); }
+    .craft-orbit { box-shadow: 0 0 0 1px rgba(239,230,211,.025), inset 0 0 2rem rgba(0,0,0,.13); }
+    .bottle-body { box-shadow: inset .8rem 0 1rem rgba(0,0,0,.45), inset -.4rem 0 .7rem rgba(212,181,107,.08), 0 1rem 2rem rgba(0,0,0,.16); }
+    .wine-entry { border-top-color: rgba(210,194,154,.38); }
+    .wine-image { box-shadow: inset 0 0 0 1px rgba(239,230,211,.08), inset 0 0 2rem rgba(0,0,0,.4); }
+    .wine-image img { filter: sepia(.46) saturate(.64) contrast(1.12); }
+    .gallery-frame { border-width: 1px 1px 3px; }
+    .gallery-picture { box-shadow: inset 0 0 0 1px rgba(239,230,211,.12), inset 0 0 5rem rgba(0,0,0,.4); }
+    .register-list, .craft-list { box-shadow: 0 -1px 0 rgba(239,230,211,.035); }
+    .register-entry { position: relative; }
+    .register-entry::after { content: ""; position: absolute; right: 0; width: .35rem; height: .35rem; border: 1px solid var(--gold); transform: rotate(45deg); opacity: .42; }
+    .garden-scene, .salon-room { box-shadow: inset 0 0 5rem rgba(0,0,0,.28); }
+    .archive-table { background: repeating-linear-gradient(0deg, transparent 0 2.5rem, rgba(74,46,25,.1) 2.55rem 2.6rem), radial-gradient(ellipse at 50% 0, rgba(255,240,186,.18), transparent 35%), #b99f72; }
+    .archive-letter { box-shadow: .8rem .8rem 1rem rgba(39,22,12,.25), inset 0 0 0 1px rgba(112,85,50,.14); }
+    .valuation-amount { color: #c5a45e; text-shadow: 0 .08em 0 rgba(0,0,0,.35), 0 0 1.8rem rgba(180,144,61,.12); }
+    .chapel { background: radial-gradient(ellipse at 50% 53%, rgba(182,132,61,.18), transparent 18rem), linear-gradient(90deg, #070605, #1d1510 50%, #070605); }
+    .chapel-passage { opacity: .82; background: linear-gradient(90deg, #060504, transparent 27% 73%, #060504), repeating-linear-gradient(90deg, transparent 0 18%, rgba(210,194,154,.07) 18.1% 18.2%, transparent 18.3% 81.7%, rgba(210,194,154,.07) 81.8% 81.9%, transparent 82%); }
+    .chapel-frame { border-color: rgba(180,144,61,.48); background: radial-gradient(ellipse at 50% 43%, rgba(212,164,70,.23), transparent 16rem), linear-gradient(150deg, rgba(239,230,211,.025), transparent 35%); box-shadow: inset 0 0 3rem rgba(0,0,0,.35), 1.2rem 1.2rem 0 rgba(0,0,0,.18); }
+    .chapel-frame::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(118deg, rgba(239,230,211,.07), transparent 18% 68%, rgba(0,0,0,.18)); mix-blend-mode: screen; }
+    .cross { perspective: 42rem; }
+    .cross::before { background: linear-gradient(90deg, #0d0805 0%, #2d1b10 9%, #6a4628 24%, #3b2414 45%, #8e6a3d 51%, #4b2e18 71%, #170c08 100%), repeating-linear-gradient(83deg, transparent 0 1.8rem, rgba(239,230,211,.07) 1.85rem 1.92rem, transparent 1.98rem 3.8rem); }
+    .cross::after { background: linear-gradient(90deg, #120a06 0%, #49301b 18%, #805b32 31%, #392213 50%, #8e6a3d 55%, #4a2b16 77%, #130906 100%), repeating-linear-gradient(8deg, transparent 0 1.45rem, rgba(239,230,211,.07) 1.5rem 1.56rem, transparent 1.61rem 3.1rem); }
+    .cross::before, .cross::after { border-color: rgba(193,151,82,.76); }
+    .chapel-inscription span { position: relative; }
+    .chapel-inscription span::before, .chapel-inscription span::after { content: "—"; margin: 0 .7rem; color: rgba(180,144,61,.65); }
+    .footer-nav, .sound-orb { box-shadow: 0 .8rem 2rem rgba(0,0,0,.22), inset 0 0 0 1px rgba(239,230,211,.035); }
+    .chapter-drawer, .modal { backdrop-filter: blur(7px) saturate(.78); }
+    .drawer-panel, .modal-card, .private-card, .instrument-card { box-shadow: inset 0 0 0 1px rgba(239,230,211,.04), 1.5rem 1.5rem 0 rgba(0,0,0,.24), 0 0 4rem rgba(0,0,0,.24); }
+    .drawer-panel::before, .modal-card::before { content: "✦"; position: absolute; top: 1rem; left: 1rem; color: var(--gold); font-size: .55rem; opacity: .7; }
+    .private-card { background: linear-gradient(145deg, rgba(61,39,23,.98), rgba(13,9,7,.99)); }
+    .private-image { box-shadow: inset 0 0 0 1px rgba(239,230,211,.12), inset 0 0 3rem rgba(0,0,0,.5); }
+    .source-card::before, .source-card::after { box-shadow: 0 0 0 1px rgba(180,144,61,.08); }
+    .prelude { perspective: 90rem; background: radial-gradient(ellipse at 50% 41%, rgba(205,164,82,.13), transparent 13rem), radial-gradient(ellipse at 50% 74%, rgba(107,23,31,.28), transparent 27rem), linear-gradient(115deg, #070504, #1d120d 48%, #080605); }
+    .prelude::before { inset: 1.35rem; border-color: rgba(180,144,61,.42); box-shadow: inset 0 0 0 1px rgba(239,230,211,.035), inset 0 0 5rem rgba(0,0,0,.32), 0 0 0 1px rgba(0,0,0,.4); }
+    .prelude::after { content: ""; position: absolute; inset: 4.2rem 13vw 3.4rem; border: 1px solid rgba(180,144,61,.13); border-radius: 50% 50% 0 0; pointer-events: none; box-shadow: inset 0 0 3rem rgba(180,144,61,.035); }
+    .prelude-inner { width: min(34rem, 84vw); transform-style: preserve-3d; animation: preludeFloat 8s ease-in-out infinite; }
+    @keyframes preludeFloat { 50% { transform: translateY(-.35rem) rotateX(.35deg); } }
+    .prelude-mark { width: 4.4rem; margin-bottom: 2.35rem; filter: drop-shadow(0 .45rem .8rem rgba(0,0,0,.5)); transform: translateZ(1.5rem); }
+    .prelude h1 { text-shadow: .06em .08em 0 rgba(0,0,0,.55), 0 0 2.5rem rgba(180,144,61,.11); transform: translateZ(1rem); }
+    .prelude h1::before { content: "MCMXXVI"; display: block; margin-bottom: 1.4rem; color: var(--gold); font: .55rem var(--book); letter-spacing: .42em; }
+    .prelude p { letter-spacing: .08em; }
+    .prelude-ritual { padding: 1rem 1.2rem 1.15rem; border-top: 1px solid rgba(180,144,61,.28); border-bottom: 1px solid rgba(180,144,61,.28); background: linear-gradient(90deg, rgba(0,0,0,.16), rgba(180,144,61,.035), rgba(0,0,0,.16)); box-shadow: inset 0 0 1.8rem rgba(0,0,0,.22); }
+    .prelude-choice-label { letter-spacing: .28em; }
+    .theme-choice { min-width: 9.3rem; box-shadow: inset 0 0 0 1px rgba(239,230,211,.025); }
+    .enter-button { position: relative; margin-top: .45rem; box-shadow: 0 .65rem 1rem rgba(0,0,0,.22), inset 0 0 0 1px rgba(239,230,211,.04); }
+    .enter-button::before, .enter-button::after { content: "✦"; position: absolute; top: 50%; color: var(--gold); font-size: .5rem; transform: translateY(-50%); }
+    .enter-button::before { left: -.9rem; } .enter-button::after { right: -.9rem; }
+    .cross { width: min(10rem, 22vw); height: min(29rem, 62vh); }
+    .cross::before { left: 36%; width: 28%; }
+    .cross::after { top: 28%; height: 19%; }
+    .cross-grain { inset: 2% 37% 1%; }
+    .cross-wear { inset: 1% 35% 1%; }
+    .cross-grain::before, .cross-wear::before { top: 28%; height: 19%; }
+    .chapel-frame { perspective: 50rem; }
+    .chapel-frame .cross { transform: translateZ(1rem) rotateY(-2deg); }
+    @media (max-width: 760px) {
+      body::before { inset: .5rem; }
+      .chapter::before { inset: .8rem; }
+      .site-header::after { top: 4.35rem; }
+      .site-header { padding-top: 1.35rem; }
+      .wordmark::before { display: none; }
+      .eyebrow::before { width: 1.15rem; }
+      .prelude::after { inset: 3rem 1.8rem 2.2rem; }
+      .prelude-inner { animation-duration: 10s; }
+      .prelude-mark { width: 3.8rem; }
+      .prelude h1::before { margin-bottom: 1rem; }
+      .theme-choice { min-width: 8.35rem; }
+      .cross { width: 8.4rem; height: min(26rem, 57vh); }
+      .chapel-frame .cross { transform: translateZ(.6rem) rotateY(-2deg) scale(.8); }
+    }
+    @media (max-width: 760px) { .private-gallery, .instrument-grid { grid-template-columns: 1fr; } .private-image { min-height: 15rem; } .private-actions { display: block; } .private-note { display: block; margin-top: .8rem; } .scroll-rail { right: .45rem; } }
+
+    @media (max-width: 760px) {
+      .site-header { padding-top: 1.25rem; }
+      .header-actions { gap: .6rem; }
+      .header-button { font-size: .52rem; letter-spacing: .14em; }
+      .chapter-index { top: 7rem; left: 1rem; }
+      .chapter-inner { padding: 7.5rem 1.45rem 7rem; }
+      .arrival .chapter-inner { align-items: start; padding-top: 25vh; }
+      .arrival-copy { margin-left: 6vw; width: 88vw; }
+      .arrival-copy .display { font-size: clamp(4.3rem, 20vw, 8rem); }
+      .arrival-copy .display span { margin-left: .23em; }
+      .arrival-sub { margin: 2rem 0 0 20%; width: 12rem; font-size: 1rem; }
+      .arch-scene { top: 24%; right: -20%; width: 106vw; height: 64%; opacity: .65; }
+      .arch-moon { width: 5rem; }
+      .arrival-note { bottom: 9rem; left: 1.45rem; font-size: .53rem; }
+      .scroll-mark { display: none; }
+      .house { background: var(--walnut); }
+      .house .chapter-inner, .craft .chapter-inner, .gallery .chapter-inner { display: block; }
+      .house-arch { height: 52vh; margin: 2rem 1rem 3rem; }
+      .house-copy { margin-left: 1rem; }
+      .house-copy h2, .craft-copy h2, .gallery-copy h2 { font-size: 4.1rem; }
+      .body-copy { font-size: 1.05rem; }
+      .craft-art { min-height: 54vh; }
+      .craft-orbit { top: 45%; }
+      .bottle { transform: translate(-50%, -48%) rotate(7deg) scale(.78); }
+      .craft-copy { margin: 0 1rem; }
+      .reserve-heading { display: block; margin-left: 1rem; }
+      .reserve-heading h2 { font-size: 4.6rem; }
+      .reserve-intro { margin-top: 2rem; }
+      .collection { display: block; margin: 0 1rem; }
+      .wine-entry, .wine-entry:nth-child(2), .wine-entry:nth-child(3) { min-height: 27rem; margin-bottom: 2rem; }
+      .gallery { background: var(--oxblood-deep); }
+      .gallery-copy { margin: 0 1rem 3rem; }
+      .gallery-art { min-height: 52vh; }
+      .gallery-frame { inset: 2% 7% 4% 4%; }
+      .correspondence h2 { font-size: clamp(4.4rem, 20vw, 8rem); }
+      .register-heading { display: block; margin-left: 1rem; }
+      .register-heading h2 { font-size: 4.6rem; }
+      .register-heading p { margin-top: 2rem; }
+      .register-list { margin: 0 1rem; }
+      .register-entry { grid-template-columns: 4rem 1fr; gap: .3rem 1rem; }
+      .register-entry p { grid-column: 2; }
+      .register-entry em { grid-column: 2; }
+      .garden .chapter-inner, .salon .chapter-inner, .archive .chapter-inner { display: block; }
+      .garden-copy, .salon-copy, .archive-copy { margin: 0 1rem 3rem; }
+      .garden-scene, .salon-room { min-height: 54vh; }
+      .garden-moon { width: 4.5rem; }
+      .salon-copy { order: initial; }
+      .archive-table { min-height: 43vh; }
+      .archive-letter { width: 80%; }
+      .valuation-amount { font-size: clamp(4.2rem, 18vw, 8rem); }
+      .chapel { min-height: 120svh; }
+      .chapel-frame { width: 82vw; height: 63vh; }
+      .cross { transform: scale(.72); }
+      .footer-nav { bottom: max(.75rem, env(safe-area-inset-bottom)); }
+      .sound-orb { bottom: calc(max(.75rem, env(safe-area-inset-bottom)) + 3.8rem); right: 1rem; }
+      .sound-orb:hover, .sound-orb:focus-within, .sound-orb.is-open { width: 12rem; }
+      .modal-card { padding: 3rem 1.7rem 2rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; filter: none; }
+    }
+  </style>
+</head>
+<body>
+  <canvas class="dust" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+  <div class="scroll-rail" aria-hidden="true"><span id="scrollProgress"></span></div>
+
+  <div class="prelude" id="prelude" role="dialog" aria-label="Enter Mittal Reserve">
+    <div class="prelude-inner">
+      <svg class="prelude-mark" viewBox="0 0 80 80" aria-hidden="true">
+        <circle cx="40" cy="40" r="26" fill="none" stroke="currentColor"/>
+        <path d="M40 14v52M14 40h52M23 23l34 34M57 23L23 57" fill="none" stroke="currentColor" opacity=".45"/>
+        <circle cx="40" cy="40" r="4" fill="currentColor"/>
+      </svg>
+      <h1>Mittal <span>Reserve</span></h1>
+      <p>La casa si apre una sola volta.</p>
+      <div class="prelude-ritual" aria-label="Archive opening sequence">
+        <div class="prelude-status"><span id="preludeStatus">Preparing the private archive</span><span id="preludePercent">00</span></div>
+        <div class="prelude-progress"><span id="preludeProgress"></span></div>
+        <span class="prelude-choice-label">Choose the vault light</span>
+        <div class="theme-choices" role="group" aria-label="Choose dark or light theme">
+          <button class="theme-choice" type="button" data-prelude-theme="dark">Night Vault</button>
+          <button class="theme-choice" type="button" data-prelude-theme="light">Day Cellar</button>
+        </div>
+      </div>
+      <button class="enter-button" id="enterButton" disabled>Varcare la soglia</button>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <a class="wordmark" href="#arrival" aria-label="Mittal Reserve home">MITTAL RESERVE<small>EST. MCMXXVI · VERONA</small></a>
+    <div class="header-actions">
+      <button class="header-button" id="themeButton" aria-label="Change the light of the archive">La luce</button>
+      <button class="header-button" id="chaptersButton" aria-expanded="false" aria-controls="chapterDrawer">L'indice</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="chapter arrival" id="arrival" data-chapter="I">
+      <div class="chapter-inner">
+        <span class="chapter-index">I · Arrival</span>
+        <div class="arrival-copy">
+          <div class="eyebrow reveal">L'arrivo · L'archivio privato</div>
+          <h1 class="display reveal delay-1">Mittal <span>Reserve</span></h1>
+          <p class="arrival-sub reveal delay-2">A century of patience, preserved in the hills above Verona.</p>
+        </div>
+        <div class="arch-scene" id="parallaxScene" aria-hidden="true">
+          <div class="arch-moon"></div><div class="arch-stem"></div>
+          <svg class="vines" viewBox="0 0 500 360" preserveAspectRatio="none">
+            <path d="M5 350C70 256 80 168 134 108c51-57 86 22 94 90 9 82 43 125 97 70 53-55 42-146 91-194 38-37 57 9 79 47"/>
+            <path d="M78 283c30-25 51-39 84-40M233 215c28-13 47-18 72-12M352 161c21-5 37-2 61 13M105 176c-18-17-29-32-36-52M419 120c-4-27-1-46 13-66" opacity=".55"/>
+          </svg>
+        </div>
+        <a class="arrival-note" href="#house">La soglia · Varcare</a>
+        <a class="scroll-mark" href="#house">Attraversare la casa</a>
+      </div>
+    </section>
+
+    <section class="chapter house" id="house" data-chapter="II">
+      <div class="chapter-inner">
+        <span class="chapter-index">II · The house</span>
+        <div class="house-arch reveal">
+          <div class="silhouette" aria-hidden="true"></div>
+        </div>
+        <div class="house-copy">
+          <div class="eyebrow reveal">La casa · Il primo silenzio</div>
+          <h2 class="reveal delay-1">The<br><em>house</em></h2>
+          <div class="rule reveal delay-2"></div>
+          <p class="body-copy reveal delay-2">Behind the stone, the reserve keeps its own measure of time. Walnut, candle smoke, and the cool hush of a cellar beneath the hill.</p>
+          <div class="timeline reveal delay-3">
+            <strong>MCMXXVI</strong><p>Il primo foglio del registro.</p>
+            <strong>Presente</strong><p>L'ingresso non si annuncia. Si scopre.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter craft" id="craft" data-chapter="III">
+      <div class="chapter-inner">
+        <span class="chapter-index">III · The craft</span>
+        <div class="craft-art reveal">
+          <div class="craft-orbit"></div>
+          <div class="bottle" aria-label="Decorative reserve bottle">
+            <div class="bottle-neck"></div>
+            <div class="bottle-body"><div class="bottle-glint"></div></div>
+          </div>
+        </div>
+        <div class="craft-copy">
+          <div class="eyebrow reveal">Il mestiere · Ciò che non s'affretta</div>
+          <h2 class="reveal delay-1">The<br><em>craft</em></h2>
+          <p class="body-copy reveal delay-2">Every gesture is small enough to be mistaken for nothing. A hand over oak. A label pressed flat. A light left on in the room below.</p>
+          <ul class="craft-list reveal delay-3">
+            <li><span>Patientia · I</span><span>01</span></li>
+            <li><span>Provenienza · II</span><span>02</span></li>
+            <li><span>Silentium · III</span><span>03</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter reserve" id="reserve" data-chapter="IV">
+      <div class="chapter-inner">
+        <span class="chapter-index">IV · The reserve</span>
+        <div class="reserve-heading">
+          <div><div class="eyebrow reveal">Il tesoro · Tre camere private</div><h2 class="reveal delay-1">The <em>reserve</em></h2></div>
+          <p class="reserve-intro reveal delay-2">Non un catalogo. Tre porte, ciascuna verso un'ora diversa.</p>
+        </div>
+        <div class="collection">
+          <article class="wine-entry reveal" data-wine="I" tabindex="0" role="button" aria-label="Open Reserve I">
+            <span class="wine-number">I / 1926</span>
+            <div class="wine-image"><div class="wine-fallback"></div><img src="1.jpg" alt="Reserve I archival study" onerror="this.style.display='none'"></div>
+            <div class="wine-name"><h3>Rosso<br><em>Primo</em></h3><small>Varcare la camera</small></div>
+          </article>
+          <article class="wine-entry reveal delay-1" data-wine="II" tabindex="0" role="button" aria-label="Open Reserve II">
+            <span class="wine-number">II / 1948</span>
+            <div class="wine-image"><div class="wine-fallback two"></div><img src="2.jpg" alt="Reserve II archival study" onerror="this.style.display='none'"></div>
+            <div class="wine-name"><h3>Oro<br><em>Lento</em></h3><small>Varcare la camera</small></div>
+          </article>
+          <article class="wine-entry reveal delay-2" data-wine="III" tabindex="0" role="button" aria-label="Open Reserve III">
+            <span class="wine-number">III / 1971</span>
+            <div class="wine-image"><div class="wine-fallback three"></div><img src="3.jpg" alt="Reserve III archival study" onerror="this.style.display='none'"></div>
+            <div class="wine-name"><h3>Notte<br><em>Alta</em></h3><small>Varcare la camera</small></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter gallery" id="gallery" data-chapter="V">
+      <div class="chapter-inner">
+        <span class="chapter-index">V · The gallery</span>
+        <div class="gallery-copy">
+          <div class="eyebrow reveal">La galleria · Un ritratto nell'ombra</div>
+          <h2 class="reveal delay-1">The<br><em>gallery</em></h2>
+          <p class="body-copy reveal delay-2">There are rooms in every house that are not made for display. They keep the faces, the unfinished letters, and the particular red of an evening that will not return.</p>
+        </div>
+        <div class="gallery-art reveal delay-1">
+          <div class="gallery-frame"><div class="gallery-picture"></div></div>
+          <div class="gallery-stamp">PRIVATE ARCHIVE · PLATE V</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter register" id="register" data-chapter="VI">
+      <div class="chapter-inner">
+        <span class="chapter-index">VI · Il registro</span>
+        <div class="register-heading">
+          <div><div class="eyebrow reveal">Il registro · Her days</div><h2 class="reveal delay-1">The register<br><em>of her days.</em></h2></div>
+          <p class="reveal delay-2">Dates kept like pressed flowers between the pages of a private book.</p>
+        </div>
+        <div class="register-list">
+          <div class="register-entry reveal"><b>MR · 001</b><time>MCMXXVI</time><p>The first leaf is entered in Verona.</p><em>folio preserved</em></div>
+          <div class="register-entry reveal delay-1"><b>MR · 002</b><time>VII · XII</time><p>A candle remains lit after the house has gone quiet.</p><em>marginalia · nocturne</em></div>
+          <div class="register-entry reveal delay-2"><b>MR · 003</b><time>PRESENTE</time><p>The invitation finds its intended reader.</p><em>sealed with bronze</em></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter garden" id="garden" data-chapter="VII">
+      <div class="chapter-inner">
+        <span class="chapter-index">VII · Il giardino segreto</span>
+        <div class="garden-copy">
+          <div class="eyebrow reveal">Il giardino segreto · After the last bell</div>
+          <h2 class="reveal delay-1">A garden<br><em>after dusk.</em></h2>
+          <p class="body-copy reveal delay-2">Cypress keeps the boundary. Olive leaves hold the moon. Somewhere beyond the fountain, the night continues without witness.</p>
+        </div>
+        <div class="garden-scene reveal delay-1" aria-label="A procedural moonlit Italian garden">
+          <div class="garden-moon"></div><div class="cypress one"></div><div class="cypress two"></div><div class="cypress three"></div><div class="garden-arch"></div><div class="garden-fountain"></div><div class="garden-ground"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter salon" id="salon" data-chapter="VIII">
+      <div class="chapter-inner">
+        <span class="chapter-index">VIII · Il salone notturno</span>
+        <div class="salon-room reveal" aria-label="An empty night salon">
+          <div class="salon-light"></div><div class="salon-curtain left"></div><div class="salon-curtain right"></div><div class="salon-floor"></div>
+        </div>
+        <div class="salon-copy">
+          <div class="eyebrow reveal">Il salone notturno · The room after music</div>
+          <h2 class="reveal delay-1">The empty<br><em>salon.</em></h2>
+          <p class="body-copy reveal delay-2">Marble beneath the dust. Bronze above the silence. One warm light suspended beneath a ceiling too high to remember.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter archive" id="archive" data-chapter="IX">
+      <div class="chapter-inner">
+        <span class="chapter-index">IX · L'archivio</span>
+        <div class="archive-copy">
+          <div class="eyebrow reveal">L'archivio privato · MR · 004</div>
+          <h2 class="reveal delay-1">Sealed<br><em>correspondence.</em></h2>
+          <p class="body-copy reveal delay-2">A letter is not a message. It is an object that has crossed time to reach one particular hand.</p>
+        </div>
+        <div class="archive-table reveal delay-1">
+          <div class="archive-letter"><b>MITTAL RESERVE</b><p>For the one whose presence makes a house remember its light.</p></div>
+          <div class="archive-seal">MR<br>MMXXVI</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter valuation" id="valuation" data-chapter="X">
+      <div class="chapter-inner">
+        <div class="valuation-copy">
+          <div class="eyebrow reveal">La camera d'oro · Edizione concettuale</div>
+          <h2 class="reveal delay-1">The million-dollar<br><em>edition.</em></h2>
+          <div class="valuation-amount reveal delay-2">$1,000,000</div>
+          <div class="valuation-note reveal delay-3">CONCEPTUAL VALUATION · NOT A COMMERCIAL OFFER</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter suono" id="suono" data-chapter="XI">
+      <div class="chapter-inner">
+        <span class="chapter-index">XI · Il suono</span>
+        <div>
+          <div class="suono-disc reveal" aria-hidden="true"></div>
+          <div class="eyebrow reveal delay-1">Il suono privato · A room without walls</div>
+          <h2 class="reveal delay-2">The house<br><em>breathes.</em></h2>
+          <p class="body-copy reveal delay-3">A private sound, held beneath the archive. The small bronze console remains at the edge of the page.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter chapel" id="chapel" data-chapter="XII">
+      <div class="chapel-passage" aria-hidden="true"></div>
+      <div class="chapter-inner">
+        <span class="chapter-index">XII · Il silenzio finale</span>
+        <div class="chapel-frame reveal">
+          <div class="cross" aria-label="A monumental wooden cross"><div class="cross-grain"></div><div class="cross-wear"></div></div>
+        </div>
+        <div class="chapel-inscription reveal delay-2">
+          <p>The house falls quiet.<br>The light remains.<br>The memory endures.</p>
+          <span>Il silenzio · La memoria · La luce</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter correspondence" id="correspondence" data-chapter="XIII">
+      <div class="chapter-inner">
+        <span class="chapter-index">XIII · La corrispondenza</span>
+        <div>
+          <div class="eyebrow reveal">For the rarest correspondence</div>
+          <h2 class="reveal delay-1">Write<br><em>to the house.</em></h2>
+          <p class="reveal delay-2">The final chamber is not a form. It is a letter. A private line from one desk to another.</p>
+          <a class="seal-link reveal delay-3" href="mailto:mittalshaurya66@gmail.com?subject=An%20invitation%20to%20Mittal%20Reserve">The house may be addressed <span>↗</span></a>
+          <div class="correspondence-note">mittalshaurya66@gmail.com</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="footer-nav" aria-label="Chapter navigation">
+    <button id="prevChapter" aria-label="Previous chamber">Indietro</button>
+    <span class="nav-line"></span><span class="chapter-current" id="chapterCurrent">I · Arrival</span><span class="nav-line"></span>
+    <button id="nextChapter" aria-label="Next chamber">Avanti</button>
+  </nav>
+
+  <div class="sound-orb" id="soundOrb" tabindex="0" role="group" aria-label="Ambient sound control">
+    <div class="orb-mark" aria-hidden="true"></div>
+    <div class="orb-panel"><div class="orb-title">Il suono privato</div><div class="orb-state" id="orbState">Ambient available</div><div class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div></div>
+    <div class="orb-controls"><button id="soundToggle" aria-label="Begin or pause the private sound">›</button><button id="soundMute" aria-label="Silence or restore the private sound">·</button></div>
+  </div>
+  <iframe class="youtube-ghost" id="youtubeGhost" title="Ambient sound" allow="autoplay; encrypted-media" src="https://www.youtube.com/embed/Bi-IPvMDS74?enablejsapi=1&playsinline=1&controls=0&loop=1&playlist=Bi-IPvMDS74"></iframe>
+
+  <aside class="chapter-drawer" id="chapterDrawer" aria-hidden="true">
+    <div class="drawer-panel">
+      <button class="drawer-close" id="drawerClose">Chiudi ×</button>
+      <div class="eyebrow">L'indice privato</div>
+      <h2>Le camere<br><em>della casa.</em></h2>
+      <ol class="drawer-list">
+        <li><button data-target="arrival"><small>I</small><span>L'arrivo</span></button></li>
+        <li><button data-target="house"><small>II</small><span>La casa</span></button></li>
+        <li><button data-target="craft"><small>III</small><span>Il mestiere</span></button></li>
+        <li><button data-target="reserve"><small>IV</small><span>Il tesoro</span></button></li>
+        <li><button data-target="gallery"><small>V</small><span>La galleria</span></button></li>
+        <li><button data-target="register"><small>VI</small><span>Il registro</span></button></li>
+        <li><button data-target="garden"><small>VII</small><span>Il giardino segreto</span></button></li>
+        <li><button data-target="salon"><small>VIII</small><span>Il salone notturno</span></button></li>
+        <li><button data-target="archive"><small>IX</small><span>L'archivio</span></button></li>
+        <li><button data-target="valuation"><small>X</small><span>La camera d'oro</span></button></li>
+        <li><button data-target="suono"><small>XI</small><span>Il suono privato</span></button></li>
+        <li><button data-target="chapel"><small>XII</small><span>Il silenzio finale</span></button></li>
+        <li><button data-target="correspondence"><small>XIII</small><span>La corrispondenza</span></button></li>
+      </ol>
+      <button class="source-trigger" id="privateGalleryTrigger">Il folio privato · ◇</button>
+      <button class="source-trigger" id="instrumentButton">Gli strumenti del conservatore · ⌘</button>
+      <button class="source-trigger" id="sourceChamberButton">L'ufficio dell'architetto · ⌘</button>
+    </div>
+  </aside>
+
+  <div class="modal" id="wineModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <button class="modal-close" id="modalClose">Chiudi ×</button>
+      <div class="modal-folio" id="modalFolio">Reserve I / MCMXXVI</div>
+      <h2 id="modalTitle">Rosso<br><em>Primo</em></h2>
+      <p id="modalCopy">A first study in depth and patience. The door remains open only long enough for the room to remember you.</p>
+    </div>
+  </div>
+
+
+  <div class="modal private-modal" id="privateModal" role="dialog" aria-modal="true" aria-labelledby="privateTitle" aria-hidden="true">
+    <div class="modal-card private-card">
+      <button class="modal-close" id="privateClose">Chiudi ×</button>
+      <div class="modal-folio">Folio personale · accesso deliberato</div>
+      <h2 id="privateTitle">The private<br><em>folio.</em></h2>
+      <p class="private-intro">A sealed personal plate, kept apart from the public sequence. Nothing here is presented as public history; it is simply held with care.</p>
+      <div class="private-gallery">
+        <figure class="private-plate">
+          <div class="private-image"><div class="portrait-fallback"></div><img src="shaurya.jpg" alt="Founder portrait, private archive" onerror="this.style.display='none'"></div>
+          <figcaption><span>The founder</span><small>MR · personal plate</small></figcaption>
+        </figure>
+        <figure class="private-plate">
+          <div class="private-image"><div class="portrait-fallback soulmate-fallback"></div><img src="so.jpg" alt="Founder and soulmate, private archive" onerror="this.style.display='none'"></div>
+          <figcaption><span>Two figures · one folio</span><small>MR · so.jpg</small></figcaption>
+        </figure>
+      </div>
+      <div class="private-actions"><button class="seal-action" id="revealPrivate">Break the seal</button><span class="private-note">The second plate is deliberately private and does not appear during ordinary scrolling.</span></div>
+    </div>
+  </div>
+
+  <div class="modal" id="instrumentModal" role="dialog" aria-modal="true" aria-labelledby="instrumentTitle" aria-hidden="true">
+    <div class="modal-card instrument-card">
+      <button class="modal-close" id="instrumentClose">Chiudi ×</button>
+      <div class="modal-folio">Conservator's desk · conceptual instruments</div>
+      <h2 id="instrumentTitle">The archive<br><em>instruments.</em></h2>
+      <p class="instrument-intro">A quiet set of client-side studies for climate, time, tasting, and verification. These are conceptual interfaces, not live provenance, inventory, or payment systems.</p>
+      <div class="instrument-grid">
+        <section class="instrument-panel"><h3>Terroir</h3><svg class="terroir-map" viewBox="0 0 420 170" role="img" aria-label="Conceptual estate terroir map"><path d="M15 125C75 90 67 47 130 63s42 56 106 24 76-50 169-15M38 144c78-20 122-2 181-38s101-11 167-41M128 15c25 28 29 59 6 106M287 21c-9 41 12 70 58 103"/><circle class="map-pin" data-terroir="North slope · limestone and wind" cx="126" cy="64" r="5"/><circle class="map-pin" data-terroir="Lower garden · cooler evening air" cx="238" cy="87" r="5"/><circle class="map-pin" data-terroir="Old wall · warm stone and dust" cx="327" cy="73" r="5"/></svg><div class="instrument-readout" id="terroirReadout">Select a point on the map.</div></section>
+        <section class="instrument-panel"><h3>Maturation</h3><p><span class="range-value" id="ageValue">20</span> years in the imagination of the cellar.</p><input class="instrument-range" id="ageSlider" type="range" min="10" max="50" step="10" value="20" aria-label="Conceptual barrel aging years"><div class="instrument-readout" id="ageReadout">Oak, tobacco, and a longer finish.</div></section>
+        <section class="instrument-panel"><h3>Tasting wheel</h3><div class="radar" id="radarWheel" aria-label="Conceptual tasting wheel"></div><div class="radar-buttons"><button data-note="Aroma · dried rose and black fruit">Aroma</button><button data-note="Body · polished and deep">Body</button><button data-note="Acidity · lifted and quiet">Acidity</button><button data-note="Finish · cedar and smoke">Finish</button></div><div class="instrument-readout" id="radarReadout">Choose a tasting dimension.</div></section>
+        <section class="instrument-panel"><h3>Serial lookup</h3><p>Check a catalogued conceptual reference, not a live authentication service.</p><div class="serial-row"><input id="serialInput" placeholder="MR-1926-001" aria-label="Conceptual serial number"><button id="serialCheck">Inspect</button></div><div class="instrument-readout" id="serialReadout"></div></section>
+        <section class="instrument-panel"><h3>Pairing drawer</h3><div class="pairing-buttons"><button data-pairing="Rosso Primo · aged cheese, truffle, black olive">Rosso Primo</button><button data-pairing="Oro Lento · saffron, pear, toasted almond">Oro Lento</button><button data-pairing="Notte Alta · dark chocolate, cedar, fire-roasted fruit">Notte Alta</button></div><div class="instrument-readout" id="pairingReadout">Select an edition.</div></section>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal source-modal" id="sourceModal" role="dialog" aria-modal="true" aria-labelledby="sourceTitle">
+    <div class="modal-card source-card">
+      <button class="modal-close" id="sourceClose">Chiudi ×</button>
+      <div class="modal-folio">L'ufficio dell'architetto</div>
+      <h2 id="sourceTitle">The complete<br><em>archive.</em></h2>
+       <p>These are the working keys to the one-file artifact. View the complete source or download a clean <em>index.html</em>; the archive remains intact.</p>
+      <div class="source-actions">
+        <button id="downloadSource">Download index.html</button>
+        <button id="viewSource">View source</button>
+      </div>
+      <textarea class="source-view" id="sourceView" aria-label="Complete index.html source" spellcheck="false" readonly></textarea>
+      <div class="source-status" id="sourceStatus" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <script>
+    "use strict";
+    const CONFIG = {
+      brand: "MITTAL RESERVE",
+      established: "MCMXXVI",
+      location: "Verona",
+      contact: "mittalshaurya66@gmail.com",
+      recipientName: "HER NAME",
+      senderName: "YOUR NAME",
+      birthdayDate: "",
+      dedication: "",
+      finalMessage: "",
+      photos: ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg", "7.jpg", "8.jpg"],
+      audio: { videoId: "Bi-IPvMDS74", source: "https://m.youtube.com/watch?v=Bi-IPvMDS74&list=RDBi-IPvMDS74&start_radio=1&pp=ygUPZ29sZGVuIGJyb3duIDhkoAcB" },
+      millionDollarStatus: "CONCEPTUAL",
+      millionDollarAmount: "$1,000,000",
+      offerCompanyName: "",
+      offerUrl: "",
+      offerDescription: "",
+      chapters: [
+        { id: "arrival", label: "I · L'arrivo" }, { id: "house", label: "II · La casa" },
+        { id: "craft", label: "III · Il mestiere" }, { id: "reserve", label: "IV · Il tesoro" },
+        { id: "gallery", label: "V · La galleria" }, { id: "register", label: "VI · Il registro" },
+        { id: "garden", label: "VII · Il giardino" }, { id: "salon", label: "VIII · Il salone" },
+        { id: "archive", label: "IX · L'archivio" }, { id: "valuation", label: "X · La camera d'oro" },
+        { id: "suono", label: "XI · Il suono" }, { id: "chapel", label: "XII · Il silenzio" },
+        { id: "correspondence", label: "XIII · La corrispondenza" }
+      ],
+      reserves: {
+        I: { folio: "Reserve I / 1926", title: "Rosso<br><em>Primo</em>", copy: "A first study in depth and patience. The door remains open only long enough for the room to remember you." },
+        II: { folio: "Reserve II / 1948", title: "Oro<br><em>Lento</em>", copy: "A slower gold, held in the half-light. It belongs to the hour between a conversation and its answer." },
+        III: { folio: "Reserve III / 1971", title: "Notte<br><em>Alta</em>", copy: "The high night: dark, poised, and made for a table where no one has thought to count the hours." }
+      }
+    };
+    const MITTAL_RESERVE_CONFIG = CONFIG;
+
+    const $ = (selector, root = document) => root.querySelector(selector);
+    const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const chapters = MITTAL_RESERVE_CONFIG.chapters;
+    let activeIndex = 0;
+    let lastFocused = null;
+
+    // Prelude: one real interaction also gives the ambient player its first permitted opportunity.
+    const prelude = $("#prelude");
+    const enter = () => {
+      prelude.classList.add("is-gone");
+      tryStartSound();
+      window.setTimeout(() => $("#arrival").focus?.({ preventScroll: true }), 600);
+    };
+    $("#enterButton").addEventListener("click", enter);
+    const safeStorage = {
+      get(key) { try { return window.localStorage.getItem(key); } catch (_) { return null; } },
+      set(key, value) { try { window.localStorage.setItem(key, value); } catch (_) {} }
+    };
+    const openingThemeButtons = $$("[data-prelude-theme]");
+    const preludeProgress = $("#preludeProgress"), preludePercent = $("#preludePercent"), preludeStatus = $("#preludeStatus"), enterButton = $("#enterButton");
+    function chooseOpeningTheme(theme) {
+      document.body.classList.toggle("is-light", theme === "light");
+      safeStorage.set("mittal-theme", theme);
+      openingThemeButtons.forEach(button => button.classList.toggle("is-selected", button.dataset.preludeTheme === theme));
+    }
+    chooseOpeningTheme(safeStorage.get("mittal-theme") || "dark");
+    openingThemeButtons.forEach(button => button.addEventListener("click", () => chooseOpeningTheme(button.dataset.preludeTheme)));
+    let openingProgress = 0;
+    const openingTimer = window.setInterval(() => {
+      openingProgress = Math.min(100, openingProgress + 4);
+      preludeProgress.style.width = openingProgress + "%";
+      preludePercent.textContent = String(openingProgress).padStart(2, "0");
+      preludeStatus.textContent = openingProgress < 56 ? "Preparing the private archive" : openingProgress < 100 ? "Lighting the first chamber" : "The archive is ready";
+      if (openingProgress === 100) { window.clearInterval(openingTimer); enterButton.disabled = false; prelude.classList.add("loading-done"); }
+    }, 42);
+    if (safeStorage.get("mittal-entered") === "1") prelude.classList.add("is-gone");
+    else safeStorage.set("mittal-entered", "1");
+
+    // Chapters
+    const drawer = $("#chapterDrawer");
+    const chaptersButton = $("#chaptersButton");
+    const closeDrawer = () => { drawer.classList.remove("open"); drawer.setAttribute("aria-hidden", "true"); chaptersButton.setAttribute("aria-expanded", "false"); };
+    const openDrawer = () => { drawer.classList.add("open"); drawer.setAttribute("aria-hidden", "false"); chaptersButton.setAttribute("aria-expanded", "true"); $("#drawerClose").focus(); };
+    chaptersButton.addEventListener("click", () => drawer.classList.contains("open") ? closeDrawer() : openDrawer());
+    $("#drawerClose").addEventListener("click", closeDrawer);
+    drawer.addEventListener("click", e => { if (e.target === drawer) closeDrawer(); });
+    $$(".drawer-list button").forEach(btn => btn.addEventListener("click", () => { closeDrawer(); document.getElementById(btn.dataset.target).scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" }); }));
+    $("#prevChapter").addEventListener("click", () => goChapter(activeIndex - 1));
+    $("#nextChapter").addEventListener("click", () => goChapter(activeIndex + 1));
+    function goChapter(index) {
+      const safe = Math.max(0, Math.min(chapters.length - 1, index));
+      document.getElementById(chapters[safe].id).scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+    }
+    if ("IntersectionObserver" in window) {
+      const chapterObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+        if (entry.isIntersecting && entry.intersectionRatio > .35) {
+          activeIndex = chapters.findIndex(c => c.id === entry.target.id);
+          $("#chapterCurrent").textContent = chapters[activeIndex].label;
+        }
+      }), { threshold: [.35, .6] });
+      chapters.forEach(c => chapterObserver.observe(document.getElementById(c.id)));
+    }
+
+    // Editorial reveals
+    const revealTargets = $$(".reveal");
+    if ("IntersectionObserver" in window && !reduceMotion) {
+      const revealObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add("in-view"); revealObserver.unobserve(entry.target); }
+      }), { threshold: .12 });
+      revealTargets.forEach(el => revealObserver.observe(el));
+    } else {
+      revealTargets.forEach(el => el.classList.add("in-view"));
+    }
+
+    // Reserve folios
+    const modal = $("#wineModal");
+    function openWine(id) {
+      const reserve = MITTAL_RESERVE_CONFIG.reserves[id];
+      $("#modalFolio").textContent = reserve.folio;
+      $("#modalTitle").innerHTML = reserve.title;
+      $("#modalCopy").textContent = reserve.copy;
+      lastFocused = document.activeElement;
+      modal.classList.add("open");
+      document.body.classList.add("modal-open");
+      $("#modalClose").focus();
+    }
+    function closeWine() {
+      modal.classList.remove("open");
+      document.body.classList.remove("modal-open");
+      lastFocused?.focus?.();
+    }
+    $$(".wine-entry").forEach(entry => {
+      entry.addEventListener("click", () => openWine(entry.dataset.wine));
+      entry.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openWine(entry.dataset.wine); } });
+    });
+    $("#modalClose").addEventListener("click", closeWine);
+    modal.addEventListener("click", e => { if (e.target === modal) closeWine(); });
+    // The hidden architect's chamber exposes real source actions.
+    const sourceModal = $("#sourceModal"), sourceView = $("#sourceView"), sourceStatus = $("#sourceStatus");
+    const currentSource = () => {
+      const clone = document.documentElement.cloneNode(true);
+      clone.querySelector("body")?.classList.remove("is-light", "modal-open");
+      clone.querySelectorAll(".private-card.is-revealed").forEach(el => el.classList.remove("is-revealed"));
+      clone.querySelectorAll(".modal.open, .chapter-drawer.open").forEach(el => { el.classList.remove("open"); el.setAttribute("aria-hidden", "true"); });
+      clone.querySelectorAll("[style]").forEach(el => el.removeAttribute("style"));
+      clone.querySelectorAll("textarea").forEach(el => { el.value = ""; el.textContent = ""; });
+      return "<!doctype html>\n" + clone.outerHTML;
+    };
+    function openSource() {
+      sourceModal.classList.add("open");
+      document.body.classList.add("modal-open");
+      sourceStatus.textContent = "";
+      $("#sourceClose").focus();
+    }
+    function closeSource() {
+      sourceModal.classList.remove("open");
+      if (!modal.classList.contains("open")) document.body.classList.remove("modal-open");
+    }
+    function downloadArchive() {
+      const blob = new Blob([currentSource()], { type: "text/html;charset=utf-8" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob); link.download = "index.html"; link.click();
+      URL.revokeObjectURL(link.href);
+      sourceStatus.textContent = "index.html has been prepared for the archive.";
+    }
+
+    // Deliberately selected private folio: never part of ordinary scroll.
+    const privateModal = $("#privateModal"), privateCard = $(".private-card", privateModal), instrumentModal = $("#instrumentModal");
+    function openPrivate() { lastFocused = document.activeElement; privateModal.classList.add("open"); privateModal.setAttribute("aria-hidden", "false"); document.body.classList.add("modal-open"); $("#privateClose").focus(); }
+    function closePrivate() { privateModal.classList.remove("open"); privateModal.setAttribute("aria-hidden", "true"); if (!instrumentModal.classList.contains("open") && !modal.classList.contains("open") && !sourceModal.classList.contains("open")) document.body.classList.remove("modal-open"); lastFocused?.focus?.(); }
+    function openInstruments() { lastFocused = document.activeElement; instrumentModal.classList.add("open"); instrumentModal.setAttribute("aria-hidden", "false"); document.body.classList.add("modal-open"); $("#instrumentClose").focus(); }
+    function closeInstruments() { instrumentModal.classList.remove("open"); instrumentModal.setAttribute("aria-hidden", "true"); if (!privateModal.classList.contains("open") && !modal.classList.contains("open") && !sourceModal.classList.contains("open")) document.body.classList.remove("modal-open"); lastFocused?.focus?.(); }
+    $("#privateGalleryTrigger").addEventListener("click", () => { closeDrawer(); openPrivate(); });
+    $("#instrumentButton").addEventListener("click", () => { closeDrawer(); openInstruments(); });
+    $("#privateClose").addEventListener("click", closePrivate); $("#instrumentClose").addEventListener("click", closeInstruments);
+    privateModal.addEventListener("click", event => { if (event.target === privateModal) closePrivate(); }); instrumentModal.addEventListener("click", event => { if (event.target === instrumentModal) closeInstruments(); });
+    $("#revealPrivate").addEventListener("click", event => { privateCard.classList.toggle("is-revealed"); event.currentTarget.textContent = privateCard.classList.contains("is-revealed") ? "Seal the folio" : "Break the seal"; });
+    $$("[data-terroir]").forEach(pin => pin.addEventListener("click", () => $("#terroirReadout").textContent = pin.dataset.terroir));
+    const ageSlider = $("#ageSlider"), ageValue = $("#ageValue"), ageReadout = $("#ageReadout");
+    ageSlider.addEventListener("input", () => { const years = Number(ageSlider.value); ageValue.textContent = years; ageReadout.textContent = years < 20 ? "Bright fruit, young oak, and a lifted finish." : years < 40 ? "Oak, tobacco, and a longer finish." : "Leather, cedar, dark fruit, and the patience of a lifetime."; });
+    $$("[data-note]").forEach(button => button.addEventListener("click", () => $("#radarReadout").textContent = button.dataset.note));
+    $$("[data-pairing]").forEach(button => button.addEventListener("click", () => $("#pairingReadout").textContent = button.dataset.pairing));
+    $("#serialCheck").addEventListener("click", () => { const value = $("#serialInput").value.trim().toUpperCase(); const known = ["MR-1926-001", "MR-1948-002", "MR-1971-003"]; $("#serialReadout").textContent = known.includes(value) ? "Catalogued conceptual reference · not a live authenticity result." : "No conceptual folio found. Nothing has been authenticated."; });
+
+    $("#sourceChamberButton").addEventListener("click", () => { closeDrawer(); openSource(); });
+    $("#sourceClose").addEventListener("click", closeSource);
+    sourceModal.addEventListener("click", e => { if (e.target === sourceModal) closeSource(); });
+    $("#downloadSource").addEventListener("click", downloadArchive);
+    $("#viewSource").addEventListener("click", () => { sourceView.value = currentSource(); sourceView.classList.toggle("visible"); if (sourceView.classList.contains("visible")) sourceView.focus(); });
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") { closeWine(); closeSource(); closePrivate(); closeInstruments(); closeDrawer(); }
+      if (e.key === "ArrowRight" && !modal.classList.contains("open")) goChapter(activeIndex + 1);
+      if (e.key === "ArrowLeft" && !modal.classList.contains("open")) goChapter(activeIndex - 1);
+    });
+
+    // Light is a real archive preference, persisted locally.
+    const themeButton = $("#themeButton");
+    const savedTheme = safeStorage.get("mittal-theme");
+    if (savedTheme === "light") document.body.classList.add("is-light");
+    themeButton.addEventListener("click", () => {
+      const light = document.body.classList.toggle("is-light");
+      safeStorage.set("mittal-theme", light ? "light" : "dark");
+    });
+
+    // Quiet pointer depth on capable screens.
+    const scene = $("#parallaxScene");
+    if (!reduceMotion && matchMedia("(pointer:fine)").matches) {
+      let raf = 0, x = 0, y = 0;
+      window.addEventListener("pointermove", e => {
+        x = (e.clientX / innerWidth - .5) * 10; y = (e.clientY / innerHeight - .5) * 8;
+        if (!raf) raf = requestAnimationFrame(() => { scene.style.setProperty("--px", `${x}px`); scene.style.setProperty("--py", `${y}px`); raf = 0; });
+      }, { passive: true });
+    }
+
+    // Lightweight adaptive dust canvas. It pauses when hidden and honors reduced motion.
+    const canvas = $(".dust"), ctx = canvas.getContext?.("2d");
+    let particles = [], canvasRaf = 0, canvasVisible = true;
+    const quality = innerWidth < 700 ? 18 : (navigator.hardwareConcurrency || 4) < 4 ? 28 : 48;
+    function resizeCanvas() {
+      if (!ctx) return;
+      canvas.width = Math.floor(innerWidth * devicePixelRatio);
+      canvas.height = Math.floor(innerHeight * devicePixelRatio);
+      ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+    }
+    function seedDust() { particles = Array.from({ length: reduceMotion ? 8 : quality }, () => ({ x: Math.random() * innerWidth, y: Math.random() * innerHeight, r: Math.random() * 1.2 + .15, v: Math.random() * .12 + .03, a: Math.random() * .3 + .05 })); }
+    function drawDust() {
+      if (!ctx || !canvasVisible) { canvasRaf = 0; return; }
+      ctx.clearRect(0, 0, innerWidth, innerHeight);
+      particles.forEach(p => { p.y -= p.v; if (p.y < -4) p.y = innerHeight + 4; ctx.fillStyle = `rgba(210,194,154,${p.a})`; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill(); });
+      canvasRaf = requestAnimationFrame(drawDust);
+    }
+    resizeCanvas(); seedDust(); if (!reduceMotion && ctx) drawDust();
+    addEventListener("resize", () => { resizeCanvas(); seedDust(); }, { passive: true });
+    document.addEventListener("visibilitychange", () => { canvasVisible = !document.hidden; if (canvasVisible && !reduceMotion && !canvasRaf) drawDust(); });
+
+
+    const scrollProgress = $("#scrollProgress"), cursorRing = $("#cursorRing");
+    function updateScrollProgress() { const max = document.documentElement.scrollHeight - innerHeight; scrollProgress.style.height = (max > 0 ? (scrollY / max) * 100 : 0) + "%"; }
+    addEventListener("scroll", updateScrollProgress, { passive: true }); updateScrollProgress();
+    if (matchMedia("(pointer:fine)").matches) {
+      addEventListener("pointermove", event => { cursorRing.style.left = event.clientX + "px"; cursorRing.style.top = event.clientY + "px"; cursorRing.classList.add("is-visible"); }, { passive: true });
+      $$("a, button, input, [role=button]").forEach(element => { element.addEventListener("mouseenter", () => cursorRing.classList.add("is-hovering")); element.addEventListener("mouseleave", () => cursorRing.classList.remove("is-hovering")); });
+    }
+
+    // Official YouTube embed, visually reduced to an object rather than a player.
+    const iframe = $("#youtubeGhost"), orb = $("#soundOrb"), orbState = $("#orbState"), soundToggle = $("#soundToggle"), soundMute = $("#soundMute");
+    let audioState = "unstarted", muted = false, fallbackTone = null, fallbackContext = null;
+    const postYouTube = (func, args = []) => iframe.contentWindow?.postMessage(JSON.stringify({ event: "command", func, args }), "*");
+    function setAudioState(state) {
+      audioState = state;
+      const playing = state === "playing";
+      orb.classList.toggle("is-playing", playing);
+      orbState.textContent = playing ? (muted ? "Muted · playing" : "Now playing") : state === "paused" ? "Sound on request" : "Ambient available";
+      soundToggle.textContent = playing ? "Ⅱ" : "›";
+      soundToggle.setAttribute("aria-label", playing ? "Pause ambient sound" : "Play ambient sound");
+    }
+    function startFallbackTone() {
+      const AudioEngine = window.AudioContext || window.webkitAudioContext;
+      if (!AudioEngine) return false;
+      try {
+        fallbackContext ||= new AudioEngine();
+        if (fallbackContext.state === "suspended") fallbackContext.resume();
+        if (fallbackContext.state === "closed") return false;
+        if (!fallbackTone) {
+          const master = fallbackContext.createGain();
+          const filter = fallbackContext.createBiquadFilter();
+          filter.type = "lowpass"; filter.frequency.value = 620;
+          master.gain.value = .018;
+          filter.connect(master).connect(fallbackContext.destination);
+          const one = fallbackContext.createOscillator(), two = fallbackContext.createOscillator();
+          one.type = "sine"; two.type = "sine"; one.frequency.value = 55; two.frequency.value = 82.5;
+          one.detune.value = -4; two.detune.value = 3;
+          one.connect(filter); two.connect(filter); one.start(); two.start();
+          fallbackTone = { master, one, two };
+        }
+        fallbackTone.master.gain.cancelScheduledValues(fallbackContext.currentTime);
+        fallbackTone.master.gain.setTargetAtTime(muted ? 0 : .018, fallbackContext.currentTime, .35);
+        return fallbackContext.state === "running";
+      } catch (_) { return false; }
+    }
+    function pauseFallbackTone() {
+      if (fallbackTone && fallbackContext) fallbackTone.master.gain.setTargetAtTime(0, fallbackContext.currentTime, .18);
+    }
+    function tryStartSound() {
+      if (iframe.contentWindow) {
+        postYouTube("unMute"); postYouTube("playVideo");
+      }
+      window.setTimeout(() => {
+        if (audioState !== "playing" && startFallbackTone()) setAudioState("playing");
+        else if (audioState !== "playing") setAudioState("paused");
+      }, 1600);
+    }
+    iframe.addEventListener("load", () => { postYouTube("addEventListener", ["onStateChange"]); tryStartSound(); });
+    window.addEventListener("message", e => {
+      if (!String(e.origin).includes("youtube.com")) return;
+      try {
+        const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
+        const state = data?.info?.playerState ?? data?.infoDelivery?.playerState;
+        if (state === 1) setAudioState("playing");
+        if (state === 2 || state === 0) setAudioState("paused");
+      } catch (_) {}
+    });
+    soundToggle.addEventListener("click", e => {
+      e.stopPropagation();
+      if (audioState === "playing") {
+        postYouTube("pauseVideo"); pauseFallbackTone(); setAudioState("paused");
+      } else tryStartSound();
+    });
+    soundMute.addEventListener("click", e => {
+      e.stopPropagation();
+      muted = !muted; postYouTube(muted ? "mute" : "unMute");
+      if (fallbackTone && fallbackContext) fallbackTone.master.gain.setTargetAtTime(muted ? 0 : .018, fallbackContext.currentTime, .18);
+      setAudioState(audioState); soundMute.textContent = muted ? "×" : "·";
+    });
+    orb.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); orb.classList.toggle("is-open"); } });
+    ["click", "pointerdown", "keydown", "touchstart"].forEach(type => document.addEventListener(type, () => { if (audioState !== "playing") tryStartSound(); }, { once: true, passive: true }));
+    setAudioState("unstarted");
+  </script>
+</body>
+</html>
